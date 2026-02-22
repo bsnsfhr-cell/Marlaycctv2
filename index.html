@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marlay CCTV | Solusi Keamanan Terpercaya</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
+        .active-view { display: block !important; }
+        .view-section { display: none; }
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3); }
+        .admin-sidebar-active { background: #1e293b; border-right: 4px solid #3b82f6; }
+        .gradient-text { background: linear-gradient(90deg, #2563eb, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-lg border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <div class="flex items-center space-x-2 cursor-pointer" onclick="showView('home')">
+                <i data-lucide="video" class="text-blue-600 w-8 h-8"></i>
+                <span class="text-xl font-extrabold tracking-tighter uppercase">MARLAY<span class="text-blue-600">CCTV</span></span>
+            </div>
+            <div class="hidden md:flex items-center space-x-8 text-sm font-bold">
+                <button onclick="showView('home')" class="hover:text-blue-600 transition">Beranda</button>
+                <button onclick="showView('produk')" class="hover:text-blue-600 transition">Katalog Produk</button>
+                <button onclick="showView('layanan')" class="hover:text-blue-600 transition">Jasa & Layanan</button>
+                <button onclick="showView('login')" class="bg-slate-900 text-white px-6 py-2.5 rounded-full hover:bg-blue-600 transition shadow-lg shadow-slate-200">Admin Portal</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-20">
+        
+        <!-- HOME SECTION -->
+        <section id="view-home" class="view-section active-view">
+            <!-- Hero -->
+            <div class="max-w-7xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-16 items-center">
+                <div class="space-y-8">
+                    <span class="bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest">Pakar Keamanan Digital</span>
+                    <h1 class="text-7xl font-black leading-[1.1] mb-6">Pantau Kapanpun <br><span class="gradient-text">Di Manapun.</span></h1>
+                    <p class="text-slate-500 text-xl leading-relaxed max-w-lg">Marlay CCTV menghadirkan sistem pengawasan mutakhir dengan integrasi smartphone untuk rumah, kantor, dan gudang Anda.</p>
+                    <div class="flex flex-wrap gap-4">
+                        <button onclick="showView('produk')" class="bg-blue-600 text-white px-10 py-5 rounded-2xl font-bold shadow-2xl shadow-blue-200 hover:bg-blue-700 transition transform hover:-translate-y-1">Eksplorasi Produk</button>
+                        <button onclick="showView('layanan')" class="bg-white border-2 border-slate-100 px-10 py-5 rounded-2xl font-bold hover:bg-slate-50 transition shadow-sm">Tentang Layanan</button>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="absolute -top-10 -left-10 w-40 h-40 bg-blue-100 rounded-full blur-3xl opacity-50"></div>
+                    <img src="https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=1000" class="rounded-[48px] shadow-3xl relative z-10 border-8 border-white" alt="Marlay CCTV System">
+                    <div class="absolute -bottom-6 -right-6 bg-white p-6 rounded-3xl shadow-xl z-20 flex items-center space-x-4 border border-slate-100">
+                        <div class="bg-emerald-500 w-3 h-3 rounded-full animate-ping"></div>
+                        <span class="text-sm font-bold">24/7 Monitoring Active</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats/Trust Section -->
+            <div class="bg-slate-900 py-20 text-white mt-12">
+                <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
+                    <div><h3 class="text-4xl font-black mb-2">500+</h3><p class="text-slate-400 text-sm font-bold">Klien Terpasang</p></div>
+                    <div><h3 class="text-4xl font-black mb-2">1000+</h3><p class="text-slate-400 text-sm font-bold">Titik Kamera</p></div>
+                    <div><h3 class="text-4xl font-black mb-2">100%</h3><p class="text-slate-400 text-sm font-bold">Garansi Resmi</p></div>
+                    <div><h3 class="text-4xl font-black mb-2">24h</h3><p class="text-slate-400 text-sm font-bold">Technical Support</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRODUK SECTION (AUTO WA API) -->
+        <section id="view-produk" class="view-section">
+            <div class="max-w-7xl mx-auto px-6 py-24">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                    <div>
+                        <h2 class="text-5xl font-black mb-4 italic">Katalog <span class="text-blue-600">Marlay</span></h2>
+                        <p class="text-slate-500 max-w-xl">Pilih paket atau perangkat yang sesuai dengan kebutuhan Anda. Klik tombol pesan untuk terhubung langsung ke tim administrasi kami via WhatsApp.</p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-2xl flex items-center space-x-4">
+                        <i data-lucide="phone-call" class="text-blue-600"></i>
+                        <div>
+                            <p class="text-[10px] font-black uppercase text-blue-400">Hubungi Kami</p>
+                            <p class="font-bold">0897-0099-710</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <!-- Produk 1 -->
+                    <div class="group bg-white p-8 rounded-[40px] border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-500">
+                        <div class="overflow-hidden rounded-3xl mb-8">
+                            <img src="https://images.unsplash.com/photo-1549892145-82784081b2f2?w=600" class="w-full h-64 object-cover transform group-hover:scale-110 transition duration-700">
+                        </div>
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-2xl font-black">UltraHD Dome AI</h3>
+                            <span class="bg-blue-600 text-white text-[10px] px-3 py-1 rounded-full font-bold uppercase">Best Seller</span>
+                        </div>
+                        <p class="text-slate-500 text-sm mb-8 leading-relaxed">Kamera indoor dengan deteksi gerakan manusia dan integrasi cloud storage.</p>
+                        <div class="flex items-center justify-between pt-6 border-t border-slate-50">
+                            <div>
+                                <p class="text-xs font-bold text-slate-400 uppercase">Harga Mulai</p>
+                                <p class="text-xl font-black text-blue-600">Rp 450.000</p>
+                            </div>
+                            <button onclick="orderViaWA('UltraHD Dome AI', '450.000')" class="bg-slate-900 text-white p-4 rounded-2xl hover:bg-emerald-500 transition shadow-lg">
+                                <i data-lucide="shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Produk 2 -->
+                    <div class="group bg-white p-8 rounded-[40px] border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-500">
+                        <div class="overflow-hidden rounded-3xl mb-8">
+                            <img src="https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=600" class="w-full h-64 object-cover transform group-hover:scale-110 transition duration-700">
+                        </div>
+                        <h3 class="text-2xl font-black mb-4">Outdoor Titan X</h3>
+                        <p class="text-slate-500 text-sm mb-8 leading-relaxed">Ketahanan cuaca ekstrem (IP67) dengan fitur Color-at-Night meski tanpa cahaya.</p>
+                        <div class="flex items-center justify-between pt-6 border-t border-slate-50">
+                            <div>
+                                <p class="text-xs font-bold text-slate-400 uppercase">Harga Mulai</p>
+                                <p class="text-xl font-black text-blue-600">Rp 750.000</p>
+                            </div>
+                            <button onclick="orderViaWA('Outdoor Titan X', '750.000')" class="bg-slate-900 text-white p-4 rounded-2xl hover:bg-emerald-500 transition shadow-lg">
+                                <i data-lucide="shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Produk 3 -->
+                    <div class="group bg-white p-8 rounded-[40px] border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-500">
+                        <div class="overflow-hidden rounded-3xl mb-8">
+                            <img src="https://images.unsplash.com/photo-1521111756787-d2f69136cedf?w=600" class="w-full h-64 object-cover transform group-hover:scale-110 transition duration-700">
+                        </div>
+                        <h3 class="text-2xl font-black mb-4">Smart PTZ 360</h3>
+                        <p class="text-slate-500 text-sm mb-8 leading-relaxed">Kontrol arah pandang via HP, zoom optik 10x, dan komunikasi suara dua arah.</p>
+                        <div class="flex items-center justify-between pt-6 border-t border-slate-50">
+                            <div>
+                                <p class="text-xs font-bold text-slate-400 uppercase">Harga Mulai</p>
+                                <p class="text-xl font-black text-blue-600">Rp 1.250.000</p>
+                            </div>
+                            <button onclick="orderViaWA('Smart PTZ 360', '1.250.000')" class="bg-slate-900 text-white p-4 rounded-2xl hover:bg-emerald-500 transition shadow-lg">
+                                <i data-lucide="shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paket Pilihan Panjang -->
+                <div class="mt-20 bg-blue-600 rounded-[50px] p-12 text-white relative overflow-hidden">
+                    <div class="relative z-10 grid md:grid-cols-2 gap-10 items-center">
+                        <div>
+                            <h3 class="text-4xl font-black mb-4">Butuh Paket Lengkap?</h3>
+                            <p class="text-blue-100 mb-8">Kami menyediakan paket instalasi 4, 8, hingga 16 kamera untuk area perkantoran dan industri besar dengan harga lebih hemat.</p>
+                            <button onclick="window.location.href='https://wa.me/628970099710?text=Halo%20Marlay%20CCTV,%20saya%20ingin%20konsultasi%20paket%20instalasi%20lengkap.'" class="bg-white text-blue-600 px-8 py-4 rounded-2xl font-black hover:scale-105 transition">Konsultasi Gratis Sekarang</button>
+                        </div>
+                        <div class="hidden md:block">
+                            <i data-lucide="shield-check" class="w-64 h-64 opacity-20 absolute -right-10 -bottom-10"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LAYANAN SECTION -->
+        <section id="view-layanan" class="view-section">
+            <div class="max-w-7xl mx-auto px-6 py-24">
+                <div class="text-center mb-24">
+                    <h2 class="text-5xl font-black italic mb-6">Layanan <span class="text-blue-600">Unggulan</span></h2>
+                    <p class="text-slate-500 max-w-2xl mx-auto">Marlay CCTV bukan sekadar menjual alat, kami membangun sistem keamanan yang kokoh dan berkelanjutan.</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-20 items-center mb-32">
+                    <div class="space-y-10">
+                        <div class="flex gap-6">
+                            <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-3xl flex items-center justify-center shrink-0 shadow-inner">
+                                <i data-lucide="tool"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-black mb-2">Pemasangan Profesional</h4>
+                                <p class="text-slate-500 text-sm leading-relaxed">Teknisi Marlay berpengalaman dalam instalasi kabel rapi (piping/casing) sehingga estetika ruangan tetap terjaga tanpa mengorbankan fungsionalitas.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6">
+                            <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-3xl flex items-center justify-center shrink-0 shadow-inner">
+                                <i data-lucide="smartphone"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-black mb-2">Setting Online (Mobile App)</h4>
+                                <p class="text-slate-500 text-sm leading-relaxed">Kami pastikan semua perangkat terkoneksi ke smartphone Anda. Anda bisa memantau rumah dari belahan dunia manapun secara real-time.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6">
+                            <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-3xl flex items-center justify-center shrink-0 shadow-inner">
+                                <i data-lucide="refresh-ccw"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-black mb-2">Layanan After Sales</h4>
+                                <p class="text-slate-500 text-sm leading-relaxed">Garansi unit 1 tahun dan bantuan setting ulang gratis jika Anda melakukan penggantian provider internet atau router wifi.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <img src="https://images.unsplash.com/photo-1558002038-1055907df827?w=500" class="rounded-[32px] h-64 w-full object-cover">
+                        <img src="https://images.unsplash.com/photo-1541888941255-2200a7470659?w=500" class="rounded-[32px] h-64 w-full object-cover mt-12">
+                    </div>
+                </div>
+
+                <!-- Tambahan Seksi Cara Kerja -->
+                <div class="bg-slate-50 rounded-[60px] p-16 border border-slate-100">
+                    <h3 class="text-3xl font-black mb-12 text-center italic">Proses <span class="text-blue-600">Kerja Marlay</span></h3>
+                    <div class="grid md:grid-cols-4 gap-8">
+                        <div class="text-center">
+                            <div class="text-5xl font-black text-blue-100 mb-4">01</div>
+                            <h5 class="font-bold mb-2">Survey Lokasi</h5>
+                            <p class="text-xs text-slate-400">Analisa titik buta dan kebutuhan perangkat.</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-5xl font-black text-blue-100 mb-4">02</div>
+                            <h5 class="font-bold mb-2">Penawaran Biaya</h5>
+                            <p class="text-xs text-slate-400">Rincian transparan tanpa biaya tersembunyi.</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-5xl font-black text-blue-100 mb-4">03</div>
+                            <h5 class="font-bold mb-2">Instalasi & Setting</h5>
+                            <p class="text-xs text-slate-400">Eksekusi pemasangan hingga sistem online.</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-5xl font-black text-blue-100 mb-4">04</div>
+                            <h5 class="font-bold mb-2">Selesai & Serah Terima</h5>
+                            <p class="text-xs text-slate-400">Edukasi penggunaan aplikasi ke konsumen.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LOGIN ADMIN SECTION -->
+        <section id="view-login" class="view-section">
+            <div class="min-h-[85vh] flex items-center justify-center p-6 bg-slate-100">
+                <div class="max-w-md w-full bg-white p-12 rounded-[50px] shadow-2xl border border-white">
+                    <div class="text-center mb-10">
+                        <div class="w-20 h-20 bg-slate-900 text-blue-500 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl rotate-3">
+                            <i data-lucide="lock" class="w-10 h-10"></i>
+                        </div>
+                        <h3 class="text-3xl font-black italic">Marlay <span class="text-blue-600">Internal</span></h3>
+                        <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest mt-2">Financial & Ops Management</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="relative">
+                            <i data-lucide="user" class="absolute left-4 top-4 w-5 h-5 text-slate-300"></i>
+                            <input type="text" id="admin-user" placeholder="Username" class="w-full pl-12 p-4 bg-slate-50 border-none rounded-2xl outline-none focus:ring-2 focus:ring-blue-600 transition font-bold">
+                        </div>
+                        <div class="relative">
+                            <i data-lucide="key" class="absolute left-4 top-4 w-5 h-5 text-slate-300"></i>
+                            <input type="password" id="admin-pass" placeholder="Password" class="w-full pl-12 p-4 bg-slate-50 border-none rounded-2xl outline-none focus:ring-2 focus:ring-blue-600 transition font-bold">
+                        </div>
+                        <button onclick="handleAdminLogin()" class="w-full bg-blue-600 text-white py-5 rounded-2xl font-black hover:bg-slate-900 transition shadow-xl shadow-blue-100 uppercase tracking-widest text-sm">Masuk Sistem</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DASHBOARD ADMIN (FINANCE MANAGEMENT) -->
+        <section id="view-dashboard" class="view-section bg-slate-50 min-h-screen">
+            <div class="flex">
+                <!-- Sidebar -->
+                <aside class="w-72 bg-slate-950 h-screen fixed left-0 p-8 text-white hidden lg:block">
+                    <div class="flex items-center space-x-3 mb-16">
+                        <i data-lucide="video" class="text-blue-500"></i>
+                        <span class="font-black tracking-tight text-xl">MARLAY-HUB</span>
+                    </div>
+                    <nav class="space-y-4">
+                        <div class="admin-sidebar-active p-4 rounded-2xl flex items-center space-x-3 cursor-pointer">
+                            <i data-lucide="wallet" class="w-5 h-5 text-blue-400"></i>
+                            <span class="text-sm font-bold uppercase tracking-wide">Keuangan Bisnis</span>
+                        </div>
+                        <div class="p-4 rounded-2xl flex items-center space-x-3 text-slate-500 hover:text-white transition cursor-pointer">
+                            <i data-lucide="package" class="w-5 h-5"></i>
+                            <span class="text-sm font-bold uppercase tracking-wide">Stok Barang</span>
+                        </div>
+                        <div class="p-4 rounded-2xl flex items-center space-x-3 text-slate-500 hover:text-white transition cursor-pointer">
+                            <i data-lucide="trending-up" class="w-5 h-5"></i>
+                            <span class="text-sm font-bold uppercase tracking-wide">Analitik</span>
+                        </div>
+                        <div onclick="showView('home')" class="p-4 rounded-2xl flex items-center space-x-3 text-red-500 hover:bg-red-500 hover:text-white transition cursor-pointer mt-32">
+                            <i data-lucide="log-out" class="w-5 h-5"></i>
+                            <span class="text-sm font-bold uppercase tracking-wide">Keluar</span>
+                        </div>
+                    </nav>
+                </aside>
+                
+                <!-- Admin Content -->
+                <div class="flex-1 lg:ml-72 p-12">
+                    <header class="flex justify-between items-center mb-12">
+                        <div>
+                            <h2 class="text-4xl font-black italic">Manajemen <span class="text-blue-600">Arus Kas</span></h2>
+                            <p class="text-slate-400 text-sm font-bold">Ringkasan Penjualan & Pengeluaran Operasional</p>
+                        </div>
+                        <div class="flex space-x-4">
+                            <button onclick="addTransaction()" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold text-sm shadow-lg shadow-blue-100 flex items-center gap-2">
+                                <i data-lucide="plus" class="w-4 h-4"></i> Input Data Baru
+                            </button>
+                        </div>
+                    </header>
+
+                    <!-- Financial Summary Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                        <div class="bg-white p-8 rounded-[40px] shadow-sm border border-slate-100">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="p-2 bg-emerald-100 text-emerald-600 rounded-lg"><i data-lucide="arrow-up-right" class="w-4 h-4"></i></div>
+                                <span class="text-xs font-black text-slate-400 uppercase tracking-widest">Total Penjualan</span>
+                            </div>
+                            <h4 class="text-3xl font-black" id="total-penjualan">Rp 0</h4>
+                        </div>
+                        <div class="bg-white p-8 rounded-[40px] shadow-sm border border-slate-100">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="p-2 bg-red-100 text-red-600 rounded-lg"><i data-lucide="arrow-down-left" class="w-4 h-4"></i></div>
+                                <span class="text-xs font-black text-slate-400 uppercase tracking-widest">Total Pengeluaran</span>
+                            </div>
+                            <h4 class="text-3xl font-black" id="total-pengeluaran">Rp 0</h4>
+                        </div>
+                        <div class="bg-blue-600 p-8 rounded-[40px] shadow-2xl text-white">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="p-2 bg-blue-500 text-white rounded-lg border border-blue-400"><i data-lucide="banknote" class="w-4 h-4"></i></div>
+                                <span class="text-xs font-black text-blue-200 uppercase tracking-widest">Laba Bersih</span>
+                            </div>
+                            <h4 class="text-3xl font-black" id="laba-bersih">Rp 0</h4>
+                        </div>
+                    </div>
+
+                    <!-- Transaction List -->
+                    <div class="bg-white p-10 rounded-[50px] shadow-sm border border-slate-100 overflow-hidden">
+                        <h4 class="font-black text-xl mb-8 italic">Mutasi Keuangan Terbaru</h4>
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="text-left text-slate-400 text-[10px] font-black uppercase tracking-[0.2em] border-b border-slate-50 pb-4">
+                                        <th class="py-4">Tanggal</th>
+                                        <th>Keterangan</th>
+                                        <th>Tipe</th>
+                                        <th>Jumlah</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="transaction-body" class="text-sm">
+                                    <!-- Dynamic Data -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer id="main-footer" class="bg-slate-950 text-white py-24 mt-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-16 mb-20">
+                <div>
+                    <h2 class="text-3xl font-black italic mb-6">MARLAY <span class="text-blue-500">CCTV</span></h2>
+                    <p class="text-slate-500 leading-relaxed text-sm">Spesialis pemasangan dan perawatan kamera keamanan IP & Analog untuk skala rumah tangga hingga industri besar di Indonesia.</p>
+                </div>
+                <div>
+                    <h4 class="font-black uppercase text-xs tracking-[0.3em] mb-6 text-blue-500">Layanan</h4>
+                    <ul class="space-y-4 text-slate-400 text-sm font-bold">
+                        <li><a href="#" class="hover:text-white transition">Pasang Baru</a></li>
+                        <li><a href="#" class="hover:text-white transition">Maintenance</a></li>
+                        <li><a href="#" class="hover:text-white transition">Setting Cloud</a></li>
+                        <li><a href="#" class="hover:text-white transition">Audit Keamanan</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-black uppercase text-xs tracking-[0.3em] mb-6 text-blue-500">Kontak Resmi</h4>
+                    <p class="text-slate-400 text-sm mb-2">WhatsApp: 0897-0099-710</p>
+                    <p class="text-slate-400 text-sm mb-6">Email: hello@marlaycctv.com</p>
+                    <div class="flex space-x-4">
+                        <div class="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center hover:text-blue-500 transition cursor-pointer"><i data-lucide="instagram" class="w-5 h-5"></i></div>
+                        <div class="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center hover:text-blue-500 transition cursor-pointer"><i data-lucide="facebook" class="w-5 h-5"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-10 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-[10px] text-slate-700 font-black uppercase tracking-[0.4em]">&copy; 2024 Marlay CCTV Intelligence Indonesia.</p>
+                <p class="text-[10px] text-slate-700 font-black uppercase tracking-[0.4em]">Built for Perfection</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Simple Modal for Admin Data Input -->
+    <div id="modal-data" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-[100] hidden items-center justify-center p-6">
+        <div class="bg-white w-full max-w-lg rounded-[40px] p-10">
+            <h3 class="text-2xl font-black mb-6 italic">Input <span class="text-blue-600">Transaksi</span></h3>
+            <div class="space-y-4">
+                <input type="text" id="desc" placeholder="Keterangan (Contoh: Penjualan Paket 4 Cam)" class="w-full p-4 bg-slate-50 border-none rounded-2xl outline-none focus:ring-2 focus:ring-blue-600 font-bold">
+                <select id="type" class="w-full p-4 bg-slate-50 border-none rounded-2xl outline-none focus:ring-2 focus:ring-blue-600 font-bold">
+                    <option value="penjualan">Penjualan (+)</option>
+                    <option value="pengeluaran">Pengeluaran (-)</option>
+                </select>
+                <input type="number" id="amount" placeholder="Jumlah (Rupiah)" class="w-full p-4 bg-slate-50 border-none rounded-2xl outline-none focus:ring-2 focus:ring-blue-600 font-bold">
+                <div class="flex gap-4 pt-4">
+                    <button onclick="saveTransaction()" class="flex-1 bg-blue-600 text-white py-4 rounded-2xl font-black hover:bg-slate-900 transition">Simpan Data</button>
+                    <button onclick="closeModal()" class="px-8 bg-slate-100 text-slate-400 py-4 rounded-2xl font-black hover:bg-slate-200 transition">Batal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Router Function
+        function showView(viewId) {
+            document.querySelectorAll('.view-section').forEach(section => {
+                section.classList.remove('active-view');
+            });
+            
+            const target = document.getElementById('view-' + viewId);
+            if(target) target.classList.add('active-view');
+
+            const nav = document.querySelector('nav');
+            const footer = document.getElementById('main-footer');
+            
+            if(viewId === 'dashboard') {
+                nav.style.display = 'none';
+                footer.style.display = 'none';
+                updateDashboard(); // Load data dashboard
+            } else {
+                nav.style.display = 'flex';
+                footer.style.display = 'block';
+            }
+
+            window.scrollTo(0, 0);
+            lucide.createIcons();
+        }
+
+        // WhatsApp Ordering API
+        function orderViaWA(productName, price) {
+            const phoneNumber = "628970099710";
+            const message = `Halo Marlay CCTV, saya tertarik untuk memesan produk:\n\n*Produk:* ${productName}\n*Harga:* Rp ${price}\n\nMohon informasi ketersediaan stok dan jadwal instalasi. Terima kasih.`;
+            const waUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            window.open(waUrl, '_blank');
+        }
+
+        // Admin Auth
+        function handleAdminLogin() {
+            const user = document.getElementById('admin-user').value;
+            const pass = document.getElementById('admin-pass').value;
+            if(user === 'admin' && pass === 'admin123') {
+                showView('dashboard');
+            } else {
+                alert('Akses Ditolak!');
+            }
+        }
+
+        // Dashboard Finance Logic (In-Memory for Demo)
+        let transactions = [
+            { id: 1, date: '2024-03-20', desc: 'Penjualan Paket 8 Cam Perkantoran', type: 'penjualan', amount: 8500000 },
+            { id: 2, date: '2024-03-21', desc: 'Beli Stok Kamera Dome X10', type: 'pengeluaran', amount: 2500000 },
+            { id: 3, date: '2024-03-22', desc: 'Gaji Teknisi Proyek A', type: 'pengeluaran', amount: 1500000 }
+        ];
+
+        function updateDashboard() {
+            const body = document.getElementById('transaction-body');
+            body.innerHTML = '';
+            
+            let totalIn = 0;
+            let totalOut = 0;
+
+            transactions.forEach(t => {
+                if(t.type === 'penjualan') totalIn += t.amount;
+                else totalOut += t.amount;
+
+                const tr = document.createElement('tr');
+                tr.className = "border-b border-slate-50 font-bold text-slate-600";
+                tr.innerHTML = `
+                    <td class="py-6">${t.date}</td>
+                    <td>${t.desc}</td>
+                    <td><span class="${t.type === 'penjualan' ? 'text-emerald-500' : 'text-red-500'} uppercase text-[10px]">${t.type}</span></td>
+                    <td>Rp ${t.amount.toLocaleString()}</td>
+                    <td><button onclick="deleteTx(${t.id})" class="text-slate-300 hover:text-red-500"><i data-lucide="trash-2" class="w-4 h-4"></i></button></td>
+                `;
+                body.appendChild(tr);
+            });
+
+            document.getElementById('total-penjualan').innerText = `Rp ${totalIn.toLocaleString()}`;
+            document.getElementById('total-pengeluaran').innerText = `Rp ${totalOut.toLocaleString()}`;
+            document.getElementById('laba-bersih').innerText = `Rp ${(totalIn - totalOut).toLocaleString()}`;
+            lucide.createIcons();
+        }
+
+        function addTransaction() {
+            document.getElementById('modal-data').classList.replace('hidden', 'flex');
+        }
+
+        function closeModal() {
+            document.getElementById('modal-data').classList.replace('flex', 'hidden');
+        }
+
+        function saveTransaction() {
+            const desc = document.getElementById('desc').value;
+            const type = document.getElementById('type').value;
+            const amount = parseInt(document.getElementById('amount').value);
+            const date = new Date().toISOString().split('T')[0];
+
+            if(!desc || !amount) return alert('Mohon isi semua data!');
+
+            transactions.unshift({ id: Date.now(), date, desc, type, amount });
+            closeModal();
+            updateDashboard();
+            
+            // Clear inputs
+            document.getElementById('desc').value = '';
+            document.getElementById('amount').value = '';
+        }
+
+        function deleteTx(id) {
+            transactions = transactions.filter(t => t.id !== id);
+            updateDashboard();
+        }
+
+        // Init
+        lucide.createIcons();
+    </script>
+</body>
+</html>
+
