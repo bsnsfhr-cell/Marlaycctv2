@@ -1,1 +1,309 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureVision | Enterprise Security Solution</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
+        .active-view { display: block !important; }
+        .view-section { display: none; }
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3); }
+        .admin-sidebar-active { background: #1e293b; border-right: 4px solid #3b82f6; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <div class="flex items-center space-x-2 cursor-pointer" onclick="showView('home')">
+                <i data-lucide="shield-check" class="text-blue-600 w-8 h-8"></i>
+                <span class="text-xl font-extrabold tracking-tighter">SECURE<span class="text-blue-600">VISION</span></span>
+            </div>
+            <div class="hidden md:flex items-center space-x-8 text-sm font-bold">
+                <button onclick="showView('home')" class="hover:text-blue-600 transition">Beranda</button>
+                <button onclick="showView('produk')" class="hover:text-blue-600 transition">Produk</button>
+                <button onclick="showView('layanan')" class="hover:text-blue-600 transition">Layanan & Jasa</button>
+                <button onclick="showView('login')" class="bg-slate-900 text-white px-5 py-2 rounded-full hover:bg-blue-600 transition">Admin Portal</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content Sections -->
+    <main class="pt-20">
+        
+        <!-- HOME SECTION -->
+        <section id="view-home" class="view-section active-view">
+            <div class="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h1 class="text-6xl font-black leading-none mb-6">KEAMANAN <br><span class="text-blue-600">TANPA CELAH.</span></h1>
+                    <p class="text-slate-600 text-lg mb-8 leading-relaxed">Lindungi aset berharga Anda dengan teknologi pengawasan AI tercanggih dan layanan instalasi profesional dari SecureVision.</p>
+                    <div class="flex space-x-4">
+                        <button onclick="showView('produk')" class="bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold shadow-lg shadow-blue-200 hover:scale-105 transition">Mulai Belanja</button>
+                        <button onclick="showView('layanan')" class="bg-white border border-slate-200 px-8 py-4 rounded-2xl font-bold hover:bg-slate-50 transition">Lihat Jasa Kami</button>
+                    </div>
+                </div>
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=800" class="rounded-[40px] shadow-2xl" alt="CCTV Security">
+                </div>
+            </div>
+        </section>
+
+        <!-- PRODUK SECTION (KATALOG SAJA) -->
+        <section id="view-produk" class="view-section">
+            <div class="max-w-7xl mx-auto px-6 py-16">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-black mb-4">Katalog Perangkat</h2>
+                    <p class="text-slate-500">Silakan hubungi tim marketing kami untuk pemesanan dan penawaran harga khusus.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Produk 1 -->
+                    <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
+                        <img src="https://images.unsplash.com/photo-1549892145-82784081b2f2?w=500" class="w-full h-56 object-cover rounded-2xl mb-6">
+                        <h3 class="text-xl font-bold mb-2">AlphaDome AI v2</h3>
+                        <p class="text-slate-500 text-sm mb-6">Kamera dome dengan fitur deteksi wajah dan auto-tracking 360 derajat.</p>
+                        <button onclick="alert('Silakan hubungi WhatsApp kami di +62 812-xxxx untuk pemesanan AlphaDome.')" class="w-full border-2 border-blue-600 text-blue-600 py-3 rounded-xl font-bold hover:bg-blue-600 hover:text-white transition">Tanya Produk</button>
+                    </div>
+                    <!-- Produk 2 -->
+                    <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
+                        <img src="https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=500" class="w-full h-56 object-cover rounded-2xl mb-6">
+                        <h3 class="text-xl font-bold mb-2">Bullet Guard Pro</h3>
+                        <p class="text-slate-500 text-sm mb-6">Ketahanan cuaca ekstrem IP67 dengan night vision berwarna dalam gelap total.</p>
+                        <button onclick="alert('Silakan hubungi WhatsApp kami di +62 812-xxxx untuk pemesanan Bullet Guard.')" class="w-full border-2 border-blue-600 text-blue-600 py-3 rounded-xl font-bold hover:bg-blue-600 hover:text-white transition">Tanya Produk</button>
+                    </div>
+                    <!-- Produk 3 -->
+                    <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
+                        <img src="https://images.unsplash.com/photo-1521111756787-d2f69136cedf?w=500" class="w-full h-56 object-cover rounded-2xl mb-6">
+                        <h3 class="text-xl font-bold mb-2">Sentinel PTZ 360</h3>
+                        <p class="text-slate-500 text-sm mb-6">Optical zoom 20x untuk pengawasan jarak jauh dengan resolusi 4K murni.</p>
+                        <button onclick="alert('Silakan hubungi WhatsApp kami di +62 812-xxxx untuk pemesanan Sentinel PTZ.')" class="w-full border-2 border-blue-600 text-blue-600 py-3 rounded-xl font-bold hover:bg-blue-600 hover:text-white transition">Tanya Produk</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LAYANAN & JASA SECTION (ISI LENGKAP) -->
+        <section id="view-layanan" class="view-section">
+            <div class="max-w-7xl mx-auto px-6 py-16">
+                <div class="grid md:grid-cols-2 gap-16 items-start">
+                    <div>
+                        <h2 class="text-4xl font-black mb-8 italic">Jasa <span class="text-blue-600">Profesional</span></h2>
+                        <div class="space-y-6">
+                            <div class="flex gap-4 p-6 bg-white rounded-2xl border border-slate-100">
+                                <div class="bg-blue-100 p-3 rounded-xl text-blue-600 h-fit"><i data-lucide="wrench"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-lg mb-1">Instalasi Infrastruktur</h4>
+                                    <p class="text-slate-500 text-sm">Pemasangan jalur kabel, setting network, dan kalibrasi sudut pandang kamera oleh teknisi ahli.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 p-6 bg-white rounded-2xl border border-slate-100">
+                                <div class="bg-emerald-100 p-3 rounded-xl text-emerald-600 h-fit"><i data-lucide="shield-check"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-lg mb-1">Audit Keamanan Siber</h4>
+                                    <p class="text-slate-500 text-sm">Pengecekan enkripsi data dan proteksi sistem pengawasan dari serangan hacker luar.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 p-6 bg-white rounded-2xl border border-slate-100">
+                                <div class="bg-amber-100 p-3 rounded-xl text-amber-600 h-fit"><i data-lucide="refresh-cw"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-lg mb-1">Maintenance Berkala</h4>
+                                    <p class="text-slate-500 text-sm">Perawatan rutin lensa, pembersihan database rekaman, dan update firmware otomatis.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h2 class="text-4xl font-black mb-8 italic">Fitur <span class="text-blue-600">Teknologi</span></h2>
+                        <div class="grid grid-cols-1 gap-6">
+                            <div class="bg-slate-900 text-white p-8 rounded-[32px] relative overflow-hidden">
+                                <i data-lucide="brain" class="absolute -right-4 -bottom-4 w-32 h-32 opacity-10"></i>
+                                <h4 class="text-xl font-bold mb-4">Neural Analytics Engine</h4>
+                                <ul class="space-y-3 text-slate-400 text-sm">
+                                    <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-blue-500"></i> Pengenalan wajah penghuni otomatis</li>
+                                    <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-blue-500"></i> Deteksi objek mencurigakan (senjata/masker)</li>
+                                    <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-blue-500"></i> Heatmapping arus pengunjung toko</li>
+                                </ul>
+                            </div>
+                            <div class="bg-blue-600 text-white p-8 rounded-[32px] relative overflow-hidden">
+                                <i data-lucide="cloud" class="absolute -right-4 -bottom-4 w-32 h-32 opacity-10"></i>
+                                <h4 class="text-xl font-bold mb-4">Hybrid Cloud Storage</h4>
+                                <p class="text-blue-100 text-sm leading-relaxed">Sistem penyimpanan ganda yang menyimpan data di perangkat lokal (NVR) dan backup otomatis ke cloud server enkripsi militer.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LOGIN ADMIN SECTION -->
+        <section id="view-login" class="view-section">
+            <div class="min-h-[80vh] flex items-center justify-center p-6">
+                <div class="max-w-md w-full bg-white p-10 rounded-[40px] shadow-2xl border border-slate-100">
+                    <div class="text-center mb-8">
+                        <div class="w-16 h-16 bg-blue-600 text-white rounded-3xl flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="lock" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-2xl font-black">Portal Manajemen</h3>
+                        <p class="text-slate-400 text-sm uppercase tracking-widest font-bold">Admin Only</p>
+                    </div>
+                    <div class="space-y-4">
+                        <input type="text" id="admin-user" placeholder="Username" class="w-full p-4 bg-slate-50 border-none rounded-2xl outline-none focus:ring-2 focus:ring-blue-600 transition">
+                        <input type="password" id="admin-pass" placeholder="Password" class="w-full p-4 bg-slate-50 border-none rounded-2xl outline-none focus:ring-2 focus:ring-blue-600 transition">
+                        <button onclick="handleAdminLogin()" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-black hover:bg-blue-600 transition shadow-xl">Masuk Dashboard</button>
+                        <p class="text-center text-[10px] text-slate-300 font-bold uppercase">Akses Terenkripsi AES-256</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DASHBOARD ADMIN (HALAMAN KHUSUS) -->
+        <section id="view-dashboard" class="view-section bg-slate-100 min-h-screen">
+            <div class="flex">
+                <!-- Sidebar -->
+                <aside class="w-64 bg-slate-900 h-screen fixed left-0 p-6 text-white hidden md:block">
+                    <div class="flex items-center space-x-2 mb-12">
+                        <i data-lucide="shield-check" class="text-blue-500"></i>
+                        <span class="font-bold tracking-tighter">SV-ADMIN</span>
+                    </div>
+                    <nav class="space-y-2">
+                        <div class="admin-sidebar-active p-4 rounded-xl flex items-center space-x-3 cursor-pointer">
+                            <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                            <span class="text-sm font-bold">Ringkasan</span>
+                        </div>
+                        <div class="p-4 rounded-xl flex items-center space-x-3 text-slate-400 hover:bg-slate-800 transition cursor-pointer">
+                            <i data-lucide="camera" class="w-4 h-4"></i>
+                            <span class="text-sm font-bold">Status Kamera</span>
+                        </div>
+                        <div class="p-4 rounded-xl flex items-center space-x-3 text-slate-400 hover:bg-slate-800 transition cursor-pointer">
+                            <i data-lucide="users" class="w-4 h-4"></i>
+                            <span class="text-sm font-bold">Klien</span>
+                        </div>
+                        <div onclick="showView('home')" class="p-4 rounded-xl flex items-center space-x-3 text-red-400 hover:bg-red-900/20 transition cursor-pointer mt-20">
+                            <i data-lucide="log-out" class="w-4 h-4"></i>
+                            <span class="text-sm font-bold">Keluar</span>
+                        </div>
+                    </nav>
+                </aside>
+                
+                <!-- Main Admin Content -->
+                <div class="flex-1 md:ml-64 p-10">
+                    <div class="flex justify-between items-center mb-10">
+                        <h2 class="text-3xl font-black italic">Dashboard <span class="text-blue-600">Keamanan</span></h2>
+                        <div class="flex items-center space-x-4">
+                            <div class="bg-emerald-100 text-emerald-600 px-4 py-2 rounded-full text-xs font-black uppercase">Server Online</div>
+                            <div class="bg-white p-2 rounded-full border shadow-sm"><i data-lucide="bell" class="w-5 h-5"></i></div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
+                        <div class="bg-white p-8 rounded-[32px] shadow-sm">
+                            <p class="text-slate-400 text-xs font-bold uppercase mb-2">Total Unit Aktif</p>
+                            <h4 class="text-4xl font-black">12.842</h4>
+                        </div>
+                        <div class="bg-white p-8 rounded-[32px] shadow-sm">
+                            <p class="text-slate-400 text-xs font-bold uppercase mb-2">Laporan Intrusi</p>
+                            <h4 class="text-4xl font-black text-red-500">0</h4>
+                        </div>
+                        <div class="bg-white p-8 rounded-[32px] shadow-sm">
+                            <p class="text-slate-400 text-xs font-bold uppercase mb-2">Bandwidth Cloud</p>
+                            <h4 class="text-4xl font-black text-blue-600">4.2 Gbps</h4>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-10 rounded-[40px] shadow-sm">
+                        <h4 class="font-black text-xl mb-6 italic">Log Aktivitas Sistem</h4>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center p-4 bg-slate-50 rounded-2xl">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></div>
+                                    <span class="text-sm font-bold text-slate-700">Update Firmware: Camera Node #1024 Sukses</span>
+                                </div>
+                                <span class="text-[10px] text-slate-400 font-bold uppercase">2 Menit yang lalu</span>
+                            </div>
+                            <div class="flex justify-between items-center p-4 bg-slate-50 rounded-2xl">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-2 h-2 bg-emerald-600 rounded-full"></div>
+                                    <span class="text-sm font-bold text-slate-700">Pencadangan Cloud Berhasil (Data Center JKT-2)</span>
+                                </div>
+                                <span class="text-[10px] text-slate-400 font-bold uppercase">14 Menit yang lalu</span>
+                            </div>
+                            <div class="flex justify-between items-center p-4 bg-slate-50 rounded-2xl">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></div>
+                                    <span class="text-sm font-bold text-slate-700">User 'Admin' login dari terminal baru (Chrome/Mac)</span>
+                                </div>
+                                <span class="text-[10px] text-slate-400 font-bold uppercase">Baru saja</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer id="main-footer" class="bg-slate-950 text-white py-20 mt-20">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h2 class="text-2xl font-black italic mb-4">SECUREVISION</h2>
+            <p class="text-slate-500 text-sm max-w-md mx-auto mb-10">Penyedia infrastruktur keamanan intelijen nomor satu untuk industri dan residensial mewah.</p>
+            <div class="flex justify-center space-x-6 text-slate-400 text-sm font-bold uppercase tracking-widest">
+                <a href="#" class="hover:text-blue-500 transition">Instagram</a>
+                <a href="#" class="hover:text-blue-500 transition">LinkedIn</a>
+                <a href="#" class="hover:text-blue-500 transition">Contact</a>
+            </div>
+            <p class="mt-20 text-[10px] text-slate-700 font-black uppercase tracking-[0.4em] border-t border-slate-900 pt-10">&copy; 2024 SecureVision Intelligence. Built with Professionalism.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Router Function
+        function showView(viewId) {
+            // Hide all
+            document.querySelectorAll('.view-section').forEach(section => {
+                section.classList.remove('active-view');
+            });
+            
+            // Show target
+            const target = document.getElementById('view-' + viewId);
+            if(target) target.classList.add('active-view');
+
+            // Handle Navigation Visibility
+            const nav = document.querySelector('nav');
+            const footer = document.getElementById('main-footer');
+            
+            if(viewId === 'dashboard') {
+                nav.style.display = 'none';
+                footer.style.display = 'none';
+            } else {
+                nav.style.display = 'flex';
+                footer.style.display = 'block';
+            }
+
+            window.scrollTo(0, 0);
+            lucide.createIcons();
+        }
+
+        // Admin Login Logic
+        function handleAdminLogin() {
+            const user = document.getElementById('admin-user').value;
+            const pass = document.getElementById('admin-pass').value;
+
+            // Simple demo check
+            if(user === 'admin' && pass === 'admin123') {
+                showView('dashboard');
+            } else {
+                alert('Akses Ditolak: Username atau password salah.');
+            }
+        }
+
+        // Initialize Icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
 
