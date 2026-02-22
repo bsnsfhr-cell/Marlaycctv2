@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureVision | Solusi Keamanan Terintegrasi Indonesia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.0/lucide.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- AOS Library for scroll animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <style>
+        :root {
+            --primary-blue: #0f4c81;
+            --accent-blue: #3b82f6;
+            --bg-light: #f8fafc;
+        }
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            scroll-behavior: smooth;
+            background-color: var(--bg-light);
+            color: #1e293b;
+        }
+        .blue-gradient {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+        }
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        .product-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .product-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.15);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 10px;
+        }
+        .page-content {
+            animation: slideUp 0.6s ease-out;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .nav-active {
+            color: var(--accent-blue) !important;
+            border-bottom: 2px solid var(--accent-blue);
+        }
+        /* Grid background effect */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: radial-gradient(circle, #e2e8f0 1px, transparent 1px);
+        }
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body class="bg-grid">
+
+    <!-- Preloader -->
+    <div id="loader" class="fixed inset-0 z-[100] bg-white flex items-center justify-center transition-opacity duration-700">
+        <div class="flex flex-col items-center">
+            <div class="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+            <p class="mt-4 font-bold text-blue-900 tracking-widest uppercase text-sm">SecureVision</p>
+        </div>
+    </div>
+
+    <!-- Top Info Bar -->
+    <div class="bg-blue-900 text-white text-[11px] py-2 hidden lg:block">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <div class="flex space-x-6">
+                <span class="flex items-center"><i data-lucide="phone" class="w-3 h-3 mr-2"></i> Support: +62 21 555 9800</span>
+                <span class="flex items-center"><i data-lucide="mail" class="w-3 h-3 mr-2"></i> sales@securevision.id</span>
+            </div>
+            <div class="flex space-x-4">
+                <a href="#" class="hover:text-blue-300">Hubungan Investor</a>
+                <a href="#" class="hover:text-blue-300">Pusat Bantuan</a>
+                <a href="#" class="hover:text-blue-300">Karir</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 w-full z-50 glass-nav border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex justify-between items-center">
+            <div class="flex items-center space-x-3 group cursor-pointer" onclick="navigateTo('beranda')">
+                <div class="bg-blue-600 p-2.5 rounded-xl group-hover:rotate-12 transition-transform duration-300">
+                    <i data-lucide="shield-check" class="text-white w-7 h-7"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-2xl font-black tracking-tighter leading-none text-slate-900">SECURE<span class="text-blue-600">VISION</span></span>
+                    <span class="text-[10px] font-bold tracking-[0.2em] text-slate-500 uppercase">Pro Security Solution</span>
+                </div>
+            </div>
+            
+            <div class="hidden lg:flex space-x-10 items-center">
+                <button onclick="navigateTo('beranda')" class="nav-btn text-sm font-bold text-slate-600 hover:text-blue-600 transition" id="nav-beranda">Beranda</button>
+                <button onclick="navigateTo('produk')" class="nav-btn text-sm font-bold text-slate-600 hover:text-blue-600 transition" id="nav-produk">Katalog Produk</button>
+                <button onclick="navigateTo('layanan')" class="nav-btn text-sm font-bold text-slate-600 hover:text-blue-600 transition" id="nav-layanan">Layanan & Solusi</button>
+                <button onclick="navigateTo('tentang')" class="nav-btn text-sm font-bold text-slate-600 hover:text-blue-600 transition" id="nav-tentang">Tentang Kami</button>
+                
+                <div class="h-6 w-px bg-slate-200"></div>
+
+                <div class="flex items-center space-x-5">
+                    <button onclick="toggleCart()" class="relative group">
+                        <i data-lucide="shopping-cart" class="w-6 h-6 text-slate-700 group-hover:text-blue-600 transition"></i>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-blue-600 text-white text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center border-2 border-white">0</span>
+                    </button>
+                    <button onclick="navigateTo('login')" class="bg-blue-600 text-white px-7 py-2.5 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg shadow-blue-200 text-sm">Portal Admin</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div id="main-content" class="page-content">
+        <!-- Dynamic content injected here -->
+    </div>
+
+    <!-- Shopping Cart Sidebar -->
+    <div id="cart-sidebar" class="fixed inset-y-0 right-0 w-full md:w-[450px] bg-white shadow-[0_0_100px_rgba(0,0,0,0.1)] transform translate-x-full transition-transform duration-500 z-[60] flex flex-col">
+        <div class="p-8 border-b flex justify-between items-center bg-slate-900 text-white">
+            <div>
+                <h3 class="text-2xl font-black">KERANJANG</h3>
+                <p class="text-[10px] tracking-widest text-slate-400">SECUREVISION E-STORE</p>
+            </div>
+            <button onclick="toggleCart()" class="p-2 hover:bg-white/10 rounded-full transition"><i data-lucide="x"></i></button>
+        </div>
+        <div id="cart-items" class="flex-1 overflow-y-auto p-8 space-y-6 custom-scrollbar">
+            <!-- Items injected here -->
+        </div>
+        <div class="p-8 border-t bg-slate-50 space-y-4">
+            <div class="space-y-2">
+                <div class="flex justify-between text-slate-500 text-sm">
+                    <span>Subtotal</span>
+                    <span id="cart-subtotal">Rp 0</span>
+                </div>
+                <div class="flex justify-between text-slate-500 text-sm">
+                    <span>Biaya Layanan/Instalasi</span>
+                    <span>Rp 250.000</span>
+                </div>
+                <div class="flex justify-between pt-4 border-t border-slate-200">
+                    <span class="text-xl font-black text-slate-900">TOTAL</span>
+                    <span id="cart-total" class="text-xl font-black text-blue-600">Rp 0</span>
+                </div>
+            </div>
+            <button onclick="checkout()" class="w-full bg-blue-600 text-white py-5 rounded-2xl font-black hover:bg-blue-700 transition flex items-center justify-center space-x-3 shadow-xl shadow-blue-100">
+                <i data-lucide="lock" class="w-5 h-5"></i>
+                <span>CHECKOUT AMAN SEKARANG</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Checkout Modal / Payment Gateway -->
+    <div id="checkout-modal" class="fixed inset-0 bg-slate-900/95 z-[70] hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-[40px] max-w-2xl w-full p-10 shadow-2xl overflow-hidden relative">
+            <div id="checkout-step-1" class="space-y-8">
+                <div class="text-center">
+                    <div class="inline-block p-4 bg-blue-50 rounded-full mb-4">
+                        <i data-lucide="credit-card" class="text-blue-600 w-10 h-10"></i>
+                    </div>
+                    <h3 class="text-3xl font-black text-slate-900">Gerbang Pembayaran</h3>
+                    <p class="text-slate-500">Silakan pilih metode pembayaran otomatis Anda.</p>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <button onclick="simulatedPayment('BCA')" class="p-6 border-2 border-slate-100 rounded-3xl hover:border-blue-500 hover:bg-blue-50 transition text-left group">
+                        <div class="font-bold text-lg group-hover:text-blue-600">BCA Virtual Account</div>
+                        <div class="text-xs text-slate-400">Verifikasi Otomatis</div>
+                    </button>
+                    <button onclick="simulatedPayment('QRIS')" class="p-6 border-2 border-slate-100 rounded-3xl hover:border-blue-500 hover:bg-blue-50 transition text-left group">
+                        <div class="font-bold text-lg group-hover:text-blue-600">QRIS / E-Wallet</div>
+                        <div class="text-xs text-slate-400">Gopay, OVO, Dana</div>
+                    </button>
+                    <button onclick="simulatedPayment('Mandiri')" class="p-6 border-2 border-slate-100 rounded-3xl hover:border-blue-500 hover:bg-blue-50 transition text-left group">
+                        <div class="font-bold text-lg group-hover:text-blue-600">Mandiri Living</div>
+                        <div class="text-xs text-slate-400">Verifikasi 1 Menit</div>
+                    </button>
+                    <button onclick="simulatedPayment('CC')" class="p-6 border-2 border-slate-100 rounded-3xl hover:border-blue-500 hover:bg-blue-50 transition text-left group">
+                        <div class="font-bold text-lg group-hover:text-blue-600">Kartu Kredit</div>
+                        <div class="text-xs text-slate-400">Visa / Mastercard</div>
+                    </button>
+                </div>
+                <button onclick="toggleCheckoutModal()" class="w-full py-4 text-slate-400 font-bold">Batalkan Pesanan</button>
+            </div>
+            
+            <div id="checkout-step-2" class="hidden space-y-8 py-10 text-center">
+                <div class="animate-spin rounded-full h-20 w-20 border-t-4 border-blue-600 mx-auto"></div>
+                <div>
+                    <h4 class="text-2xl font-black">Menunggu Verifikasi...</h4>
+                    <p class="text-slate-500 mt-2">Jangan tutup halaman ini sebelum transaksi selesai.</p>
+                </div>
+            </div>
+
+            <div id="checkout-step-3" class="hidden space-y-8 text-center">
+                <div class="w-24 h-24 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto">
+                    <i data-lucide="check-circle-2" class="w-16 h-16"></i>
+                </div>
+                <div>
+                    <h4 class="text-3xl font-black text-slate-900">Pembayaran Berhasil!</h4>
+                    <p class="text-slate-500 mt-2 px-10">Tim teknis kami akan menghubungi Anda dalam 1x24 jam untuk jadwal instalasi.</p>
+                </div>
+                <div class="bg-slate-50 p-6 rounded-2xl text-left font-mono text-sm border border-slate-100">
+                    <p class="flex justify-between"><span>Nomor Invoice:</span> <span class="font-bold">#SV-INV/2023/0821</span></p>
+                    <p class="flex justify-between mt-2"><span>Status:</span> <span class="text-green-600 font-bold">LUNAS</span></p>
+                </div>
+                <button onclick="toggleCheckoutModal(); navigateTo('beranda')" class="w-full bg-blue-600 text-white py-5 rounded-2xl font-black shadow-lg">KEMBALI KE BERANDA</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="bg-slate-900 text-white pt-32 pb-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-24">
+                <div class="space-y-8">
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-blue-600 p-2 rounded-xl">
+                            <i data-lucide="shield" class="w-8 h-8"></i>
+                        </div>
+                        <span class="text-3xl font-black tracking-tighter">SECURE<span class="text-blue-500">VISION</span></span>
+                    </div>
+                    <p class="text-slate-400 leading-relaxed text-sm">
+                        Pemimpin pasar dalam penyediaan solusi keamanan digital di Asia Tenggara. Menggabungkan AI dengan infrastruktur kamera kelas dunia untuk ketenangan pikiran Anda.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-blue-600 transition"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-blue-600 transition"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-blue-600 transition"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-blue-600 transition"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-bold mb-8 flex items-center">
+                        <span class="w-8 h-px bg-blue-600 mr-4"></span> Solusi Keamanan
+                    </h4>
+                    <ul class="space-y-4 text-slate-400 text-sm">
+                        <li><a href="#" class="hover:text-white transition">Keamanan Rumah Tinggal</a></li>
+                        <li><a href="#" class="hover:text-white transition">Pemantauan Gedung Perkantoran</a></li>
+                        <li><a href="#" class="hover:text-white transition">Solusi Smart City</a></li>
+                        <li><a href="#" class="hover:text-white transition">Keamanan Ritel & Mal</a></li>
+                        <li><a href="#" class="hover:text-white transition">Pemantauan Lalu Lintas AI</a></li>
+                        <li><a href="#" class="hover:text-white transition">Penyimpanan Cloud Aman</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-bold mb-8 flex items-center">
+                        <span class="w-8 h-px bg-blue-600 mr-4"></span> Perusahaan
+                    </h4>
+                    <ul class="space-y-4 text-slate-400 text-sm">
+                        <li><a href="#" class="hover:text-white transition">Tentang Kami</a></li>
+                        <li><a href="#" class="hover:text-white transition">Tim Eksekutif</a></li>
+                        <li><a href="#" class="hover:text-white transition">Testimoni Klien</a></li>
+                        <li><a href="#" class="hover:text-white transition">Blog Keamanan</a></li>
+                        <li><a href="#" class="hover:text-white transition">Hubungi Kami</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-bold mb-8 flex items-center">
+                        <span class="w-8 h-px bg-blue-600 mr-4"></span> Newsletter
+                    </h4>
+                    <p class="text-slate-400 text-xs mb-6 leading-relaxed">Dapatkan informasi terbaru mengenai celah keamanan dan promo bulanan kami.</p>
+                    <form onsubmit="event.preventDefault()" class="space-y-4">
+                        <input type="email" placeholder="Alamat Email" class="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 focus:ring-2 focus:ring-blue-600 outline-none transition text-sm">
+                        <button class="w-full bg-blue-600 py-4 rounded-xl font-black text-sm hover:bg-blue-700 transition">SUBSCRIBE</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500 gap-6">
+                <p>&copy; 2023 SecureVision Indonesia. Seluruh Hak Cipta Dilindungi.</p>
+                <div class="flex space-x-8">
+                    <a href="#" class="hover:text-white transition">Kebijakan Privasi</a>
+                    <a href="#" class="hover:text-white transition">Syarat & Ketentuan</a>
+                    <a href="#" class="hover:text-white transition">Peta Situs</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Data Global Produk
+        const allProducts = [
+            { id: 1, name: "SecureX Home Lite 4MP", price: 1250000, cat: "Rumah", spec: "Day/Night, Mobile View, Two-way Audio", img: "https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=500" },
+            { id: 2, name: "Industrial Pro AI Bullet", price: 4800000, cat: "Industri", spec: "Face Detection, Heatmap, 4K Resolution", img: "https://images.unsplash.com/photo-1516216628859-9bccecad13fc?w=500" },
+            { id: 3, name: "Smart PTZ Dome 360", price: 2950000, cat: "Kantor", spec: "Pan-Tilt-Zoom, 10x Optical Zoom, Wireless", img: "https://images.unsplash.com/photo-1549892145-82784081b2f2?w=500" },
+            { id: 4, name: "NightVision Black 8MP", price: 3400000, cat: "Outdoor", spec: "Starlight Sensor, Full Color Night, IP67", img: "https://images.unsplash.com/photo-1521111756787-d2f69136cedf?w=500" },
+            { id: 5, name: "Thermal Guard System", price: 12500000, cat: "High Security", spec: "Thermal Imaging, Fire Detection, Long Range", img: "https://images.unsplash.com/photo-1620216525181-a63e8a559265?w=500" },
+            { id: 6, name: "Baby Monitor Connect", price: 850000, cat: "Rumah", spec: "Cry Detection, Cloud Storage, App Push", img: "https://images.unsplash.com/photo-1545193073-952403b22e1b?w=500" },
+            { id: 7, name: "Parking Eye AI", price: 6200000, cat: "Parkir", spec: "License Plate Recognition, Barrier Link", img: "https://images.unsplash.com/photo-1600863004312-70b97950f2f4?w=500" },
+            { id: 8, name: "Wireless Hub Core", price: 1500000, cat: "Aksesori", spec: "Central Hub for 8 Cameras, 2TB Internal", img: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=500" }
+        ];
+
+        let state = {
+            cart: [],
+            currentPage: 'beranda',
+            isAdmin: false,
+            notifications: []
+        };
+
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+            easing: 'ease-out-quad'
+        });
+
+        // Navigation Engine
+        const navigateTo = (page) => {
+            const content = document.getElementById('main-content');
+            state.currentPage = page;
+            
+            // UI Update
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('nav-active'));
+            const activeNav = document.getElementById(`nav-${page}`);
+            if(activeNav) activeNav.classList.add('nav-active');
+
+            window.scrollTo(0, 0);
+
+            switch(page) {
+                case 'beranda': renderBeranda(content); break;
+                case 'produk': renderProduk(content); break;
+                case 'layanan': renderLayanan(content); break;
+                case 'tentang': renderTentang(content); break;
+                case 'login': renderLogin(content); break;
+                case 'admin': renderAdmin(content); break;
+            }
+            
+            lucide.createIcons();
+            AOS.refresh();
+        };
+
+        // --- PAGE RENDERS ---
+
+        function renderBeranda(container) {
+            container.innerHTML = `
+                <section class="relative min-h-screen flex items-center justify-center overflow-hidden blue-gradient py-20">
+                    <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+                    <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center relative z-10">
+                        <div data-aos="fade-right">
+                            <span class="inline-block px-4 py-2 bg-blue-600/30 text-blue-400 rounded-full text-[10px] font-black tracking-widest uppercase mb-6 border border-blue-500/30">Trusted Security Partner</span>
+                            <h1 class="text-6xl lg:text-8xl font-black text-white leading-none mb-8">MENJAGA <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">YANG BERHARGA</span></h1>
+                            <p class="text-xl text-slate-300 mb-10 leading-relaxed max-w-lg">
+                                Teknologi AI mutakhir yang memberikan perlindungan 24/7. Mulai dari rumah pintar hingga infrastruktur kota raksasa.
+                            </p>
+                            <div class="flex flex-wrap gap-6">
+                                <button onclick="navigateTo('produk')" class="bg-blue-600 text-white px-10 py-5 rounded-2xl font-black hover:bg-blue-700 transition shadow-2xl shadow-blue-900/40">BELANJA KATALOG</button>
+                                <button onclick="navigateTo('layanan')" class="bg-white/10 text-white border border-white/20 px-10 py-5 rounded-2xl font-black hover:bg-white/20 transition backdrop-blur-sm">PELAJARI LAYANAN</button>
+                            </div>
+                        </div>
+                        <div class="relative" data-aos="zoom-in">
+                            <div class="absolute -inset-10 bg-blue-500/20 blur-[100px] rounded-full floating"></div>
+                            <img src="https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=800" class="rounded-[40px] shadow-2xl border border-white/10 relative z-10 floating">
+                            <div class="absolute -bottom-10 -left-10 bg-white p-8 rounded-3xl shadow-2xl z-20 hidden md:block" data-aos="fade-up" data-aos-delay="400">
+                                <div class="flex items-center space-x-4">
+                                    <div class="bg-green-100 p-3 rounded-xl text-green-600"><i data-lucide="activity"></i></div>
+                                    <div>
+                                        <p class="text-[10px] font-bold text-slate-400 uppercase">Status Sistem</p>
+                                        <p class="text-lg font-black text-slate-900">100% ONLINE</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="py-32 bg-white">
+                    <div class="max-w-7xl mx-auto px-6">
+                        <div class="text-center mb-24" data-aos="fade-up">
+                            <h2 class="text-5xl font-black text-slate-900 mb-6">Mengapa SecureVision?</h2>
+                            <p class="text-slate-500 max-w-2xl mx-auto text-lg">Lebih dari sekadar kamera, kami membangun ekosistem keamanan yang dapat diandalkan setiap detik.</p>
+                        </div>
+                        <div class="grid md:grid-cols-3 gap-12">
+                            <div class="group p-12 bg-slate-50 rounded-[40px] hover:bg-blue-600 transition-all duration-500 cursor-default" data-aos="fade-up" data-aos-delay="100">
+                                <div class="w-20 h-20 bg-blue-100 rounded-3xl flex items-center justify-center text-blue-600 mb-8 group-hover:bg-white/20 group-hover:text-white transition-colors"><i data-lucide="cpu" class="w-10 h-10"></i></div>
+                                <h3 class="text-2xl font-bold mb-4 group-hover:text-white transition-colors">AI Processing</h3>
+                                <p class="text-slate-500 group-hover:text-blue-100 transition-colors leading-relaxed">Analisis video real-time untuk mendeteksi wajah, plat nomor, dan perilaku mencurigakan secara otomatis.</p>
+                            </div>
+                            <div class="group p-12 bg-slate-50 rounded-[40px] hover:bg-blue-600 transition-all duration-500 cursor-default" data-aos="fade-up" data-aos-delay="200">
+                                <div class="w-20 h-20 bg-blue-100 rounded-3xl flex items-center justify-center text-blue-600 mb-8 group-hover:bg-white/20 group-hover:text-white transition-colors"><i data-lucide="server" class="w-10 h-10"></i></div>
+                                <h3 class="text-2xl font-bold mb-4 group-hover:text-white transition-colors">Data Terenkripsi</h3>
+                                <p class="text-slate-500 group-hover:text-blue-100 transition-colors leading-relaxed">Rekaman Anda aman dengan enkripsi AES-256 tingkat militer, bahkan di penyimpanan cloud kami.</p>
+                            </div>
+                            <div class="group p-12 bg-slate-50 rounded-[40px] hover:bg-blue-600 transition-all duration-500 cursor-default" data-aos="fade-up" data-aos-delay="300">
+                                <div class="w-20 h-20 bg-blue-100 rounded-3xl flex items-center justify-center text-blue-600 mb-8 group-hover:bg-white/20 group-hover:text-white transition-colors"><i data-lucide="smartphone" class="w-10 h-10"></i></div>
+                                <h3 class="text-2xl font-bold mb-4 group-hover:text-white transition-colors">Akses Global</h3>
+                                <p class="text-slate-500 group-hover:text-blue-100 transition-colors leading-relaxed">Pantau dari smartphone atau laptop di mana pun Anda berada tanpa konfigurasi jaringan yang rumit.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="py-32 bg-slate-50 overflow-hidden">
+                    <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center">
+                        <div class="order-2 lg:order-1" data-aos="fade-right">
+                             <div class="relative">
+                                <img src="https://images.unsplash.com/photo-1551033406-611cf9a28f67?w=800" class="rounded-[60px] shadow-2xl transform -rotate-3 hover:rotate-0 transition-transform duration-700">
+                                <div class="absolute inset-0 border-2 border-blue-600 rounded-[60px] translate-x-6 translate-y-6 -z-10"></div>
+                             </div>
+                        </div>
+                        <div class="order-1 lg:order-2 space-y-8" data-aos="fade-left">
+                            <h2 class="text-5xl font-black text-slate-900 leading-tight">Keamanan adalah Investasi, <span class="text-blue-600">Bukan Pengeluaran.</span></h2>
+                            <p class="text-lg text-slate-600 leading-relaxed">Kami memahami bahwa setiap kebutuhan keamanan berbeda. Itulah mengapa kami menawarkan konsultasi gratis untuk merancang sistem yang paling efisien bagi Anda.</p>
+                            <div class="space-y-4">
+                                <div class="flex items-start space-x-4">
+                                    <div class="p-1 bg-blue-600 rounded-full mt-1 text-white"><i data-lucide="check" class="w-4 h-4"></i></div>
+                                    <div><p class="font-bold">Garansi Ganti Baru 1 Tahun</p><p class="text-sm text-slate-400">Jika ada kerusakan pabrik, kami ganti tanpa biaya.</p></div>
+                                </div>
+                                <div class="flex items-start space-x-4">
+                                    <div class="p-1 bg-blue-600 rounded-full mt-1 text-white"><i data-lucide="check" class="w-4 h-4"></i></div>
+                                    <div><p class="font-bold">Layanan Cloud Server Lokal</p><p class="text-sm text-slate-400">Latency rendah dan akses cepat dari dalam negeri.</p></div>
+                                </div>
+                            </div>
+                            <button onclick="navigateTo('layanan')" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold hover:bg-slate-800 transition">Detail Layanan</button>
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        function renderProduk(container) {
+            container.innerHTML = `
+                <section class="py-20 bg-white">
+                    <div class="max-w-7xl mx-auto px-6">
+                        <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+                            <div data-aos="fade-right">
+                                <h2 class="text-6xl font-black text-slate-900 mb-4 tracking-tighter">KATALOG <span class="text-blue-600 uppercase">Produk</span></h2>
+                                <p class="text-slate-500 max-w-lg text-lg">Hanya perangkat dengan performa tertinggi yang masuk ke dalam seleksi kami.</p>
+                            </div>
+                            <div class="flex space-x-2 overflow-x-auto pb-4 md:pb-0" data-aos="fade-left">
+                                <button class="px-6 py-3 bg-blue-600 text-white rounded-full font-bold text-sm">Semua</button>
+                                <button class="px-6 py-3 bg-slate-100 text-slate-600 hover:bg-blue-100 rounded-full font-bold text-sm transition">Rumah</button>
+                                <button class="px-6 py-3 bg-slate-100 text-slate-600 hover:bg-blue-100 rounded-full font-bold text-sm transition">Kantor</button>
+                                <button class="px-6 py-3 bg-slate-100 text-slate-600 hover:bg-blue-100 rounded-full font-bold text-sm transition">High-End</button>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+                            ${allProducts.map(p => `
+                                <div class="product-card bg-white rounded-[40px] p-6 border border-slate-100 shadow-sm flex flex-col h-full" data-aos="fade-up">
+                                    <div class="relative h-64 rounded-[32px] overflow-hidden mb-6">
+                                        <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover">
+                                        <div class="absolute top-4 left-4">
+                                            <span class="bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full">${p.cat}</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex-1 space-y-3">
+                                        <h3 class="text-xl font-black text-slate-900 leading-tight">${p.name}</h3>
+                                        <p class="text-xs text-slate-400 font-medium">${p.spec}</p>
+                                        <div class="flex items-center space-x-1 text-yellow-400">
+                                            <i data-lucide="star" class="w-3 h-3 fill-current"></i>
+                                            <i data-lucide="star" class="w-3 h-3 fill-current"></i>
+                                            <i data-lucide="star" class="w-3 h-3 fill-current"></i>
+                                            <i data-lucide="star" class="w-3 h-3 fill-current"></i>
+                                            <i data-lucide="star" class="w-3 h-3 fill-current"></i>
+                                            <span class="text-slate-400 text-[10px] ml-2 font-bold">(120+ Review)</span>
+                                        </div>
+                                    </div>
+                                    <div class="mt-8 pt-6 border-t border-slate-50 flex items-center justify-between">
+                                        <div>
+                                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Harga</p>
+                                            <p class="text-xl font-black text-blue-600">Rp ${p.price.toLocaleString('id-ID')}</p>
+                                        </div>
+                                        <button onclick="addToCart(${p.id})" class="p-4 bg-blue-600 text-white rounded-2xl hover:bg-slate-900 transition-colors shadow-lg shadow-blue-100">
+                                            <i data-lucide="shopping-bag" class="w-6 h-6"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Long content addition for product page -->
+                <section class="py-32 bg-slate-900 text-white">
+                    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-20 items-center">
+                        <div data-aos="fade-right">
+                            <h2 class="text-5xl font-black mb-10 leading-tight tracking-tighter">Spesifikasi Tinggi Adalah <span class="text-blue-500">Standard Kami.</span></h2>
+                            <div class="space-y-12">
+                                <div class="flex space-x-6">
+                                    <div class="text-blue-500"><i data-lucide="camera" class="w-10 h-10"></i></div>
+                                    <div>
+                                        <h4 class="text-xl font-bold mb-2">Sensor 4K Ultra HD</h4>
+                                        <p class="text-slate-400">Resolusi 8 Megapixel memberikan detail yang tidak terbantahkan untuk bukti hukum jika diperlukan.</p>
+                                    </div>
+                                </div>
+                                <div class="flex space-x-6">
+                                    <div class="text-blue-500"><i data-lucide="eye" class="w-10 h-10"></i></div>
+                                    <div>
+                                        <h4 class="text-xl font-bold mb-2">Advanced Night Vision</h4>
+                                        <p class="text-slate-400">Mampu melihat dalam kegelapan total hingga 40 meter dengan fitur Smart IR otomatis.</p>
+                                    </div>
+                                </div>
+                                <div class="flex space-x-6">
+                                    <div class="text-blue-500"><i data-lucide="mic" class="w-10 h-10"></i></div>
+                                    <div>
+                                        <h4 class="text-xl font-bold mb-2">Two-Way Audio</h4>
+                                        <p class="text-slate-400">Bicara dan dengar melalui kamera secara real-time langsung dari aplikasi smartphone.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="relative" data-aos="fade-left">
+                            <img src="https://images.unsplash.com/photo-1551033406-611cf9a28f67?w=1000" class="rounded-[40px] opacity-80 border border-white/10 shadow-3xl">
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        function renderLayanan(container) {
+            container.innerHTML = `
+                <section class="py-32 bg-white">
+                    <div class="max-w-7xl mx-auto px-6">
+                        <div class="text-center mb-32" data-aos="fade-up">
+                            <span class="text-blue-600 font-black tracking-widest uppercase text-sm">Full Cycle Security</span>
+                            <h2 class="text-6xl font-black text-slate-900 mt-4 tracking-tighter">Layanan Tanpa Celah</h2>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+                            <div class="p-10 bg-slate-50 rounded-[40px] border border-slate-100 hover:border-blue-200 transition" data-aos="fade-up" data-aos-delay="100">
+                                <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600 mb-8"><i data-lucide="search" class="w-8 h-8"></i></div>
+                                <h3 class="text-xl font-bold mb-4">Site Audit</h3>
+                                <p class="text-slate-500 text-sm leading-relaxed">Analisis titik buta di lokasi Anda secara gratis oleh konsultan kami.</p>
+                            </div>
+                            <div class="p-10 bg-slate-50 rounded-[40px] border border-slate-100 hover:border-blue-200 transition" data-aos="fade-up" data-aos-delay="200">
+                                <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600 mb-8"><i data-lucide="settings" class="w-8 h-8"></i></div>
+                                <h3 class="text-xl font-bold mb-4">Instalasi Rapi</h3>
+                                <p class="text-slate-500 text-sm leading-relaxed">Teknisi profesional kami menggunakan standard cabling industrial untuk ketahanan jangka panjang.</p>
+                            </div>
+                            <div class="p-10 bg-slate-50 rounded-[40px] border border-slate-100 hover:border-blue-200 transition" data-aos="fade-up" data-aos-delay="300">
+                                <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600 mb-8"><i data-lucide="phone-call" class="w-8 h-8"></i></div>
+                                <h3 class="text-xl font-bold mb-4">Support Tiket</h3>
+                                <p class="text-slate-500 text-sm leading-relaxed">Troubleshooting 24 jam melalui aplikasi dengan respon kurang dari 30 menit.</p>
+                            </div>
+                            <div class="p-10 bg-slate-50 rounded-[40px] border border-slate-100 hover:border-blue-200 transition" data-aos="fade-up" data-aos-delay="400">
+                                <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600 mb-8"><i data-lucide="refresh-cw" class="w-8 h-8"></i></div>
+                                <h3 class="text-xl font-bold mb-4">Update berkala</h3>
+                                <p class="text-slate-500 text-sm leading-relaxed">Update firmware keamanan secara OTA (Over-the-Air) untuk menangkal celah hacker baru.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="py-32 blue-gradient text-white">
+                    <div class="max-w-4xl mx-auto px-6 text-center">
+                        <h2 class="text-4xl md:text-5xl font-black mb-10 leading-tight" data-aos="fade-up">Siap Mengamankan Aset Anda Hari Ini?</h2>
+                        <div class="flex flex-col sm:flex-row justify-center gap-6" data-aos="fade-up" data-aos-delay="200">
+                            <a href="https://wa.me/62215559800" class="bg-green-500 text-white px-10 py-5 rounded-2xl font-black hover:bg-green-600 transition flex items-center justify-center">
+                                <i data-lucide="message-square" class="w-6 h-6 mr-3"></i> KONSULTASI WHATSAPP
+                            </a>
+                            <button onclick="navigateTo('produk')" class="bg-white text-blue-900 px-10 py-5 rounded-2xl font-black hover:bg-slate-100 transition">MULAI BELANJA ONLINE</button>
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        function renderTentang(container) {
+            container.innerHTML = `
+                <section class="py-20 bg-white">
+                    <div class="max-w-7xl mx-auto px-6">
+                        <div class="grid lg:grid-cols-2 gap-20 items-center mb-32">
+                            <div data-aos="fade-right">
+                                <h2 class="text-6xl font-black text-slate-900 leading-none mb-10 tracking-tighter">MISI KAMI: <br><span class="text-blue-600">ZERO CRIME RATE.</span></h2>
+                                <p class="text-xl text-slate-600 leading-relaxed mb-8">SecureVision didirikan pada tahun 2012 oleh sekelompok ahli keamanan IT yang menyadari bahwa keamanan fisik tidak boleh tertinggal oleh kemajuan digital.</p>
+                                <p class="text-slate-500 mb-10 leading-relaxed">Hari ini, kami melayani ribuan bisnis di Indonesia, mulai dari toko kelontong kecil hingga komplek industri pemerintah pusat. Standard kualitas kami tetap sama: Keamanan Tanpa Kompromi.</p>
+                                <div class="grid grid-cols-2 gap-8">
+                                    <div class="p-6 bg-slate-50 rounded-3xl">
+                                        <p class="text-4xl font-black text-blue-600 mb-2">150+</p>
+                                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Teknisi Ahli</p>
+                                    </div>
+                                    <div class="p-6 bg-slate-50 rounded-3xl">
+                                        <p class="text-4xl font-black text-blue-600 mb-2">24/7</p>
+                                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Waktu Aktif</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="relative" data-aos="fade-left">
+                                <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=800" class="rounded-[60px] shadow-3xl">
+                            </div>
+                        </div>
+
+                        <div class="text-center py-20 bg-slate-900 rounded-[60px] text-white px-10" data-aos="zoom-in">
+                            <h3 class="text-3xl font-black mb-16 uppercase tracking-widest">Partner Teknologi Kami</h3>
+                            <div class="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-60">
+                                <span class="text-4xl font-black tracking-tighter italic">HIKVISION</span>
+                                <span class="text-4xl font-black tracking-tighter italic">DAHUA</span>
+                                <span class="text-4xl font-black tracking-tighter italic">SAMSUNG</span>
+                                <span class="text-4xl font-black tracking-tighter italic">INTEL</span>
+                                <span class="text-4xl font-black tracking-tighter italic">NVIDIA</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        function renderLogin(container) {
+            container.innerHTML = `
+                <section class="min-h-screen flex items-center justify-center py-20 bg-grid">
+                    <div class="max-w-md w-full p-12 bg-white rounded-[40px] shadow-2xl border border-slate-100" data-aos="zoom-in">
+                        <div class="text-center mb-10">
+                            <div class="w-20 h-20 bg-blue-600 rounded-[28px] flex items-center justify-center text-white mx-auto mb-6 shadow-xl shadow-blue-200">
+                                <i data-lucide="shield-check" class="w-10 h-10"></i>
+                            </div>
+                            <h2 class="text-3xl font-black text-slate-900 tracking-tighter">ADMIN ACCESS</h2>
+                            <p class="text-slate-400 text-sm mt-2">Hanya untuk personel internal SecureVision.</p>
+                        </div>
+                        <div class="space-y-5">
+                            <div>
+                                <label class="block text-[10px] font-black uppercase text-slate-400 tracking-widest mb-2 ml-4">Identitas</label>
+                                <input type="text" id="admin-user" class="w-full bg-slate-50 border-none px-6 py-5 rounded-2xl outline-none focus:ring-2 focus:ring-blue-600 transition" placeholder="Username">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-black uppercase text-slate-400 tracking-widest mb-2 ml-4">Kunci Akses</label>
+                                <input type="password" id="admin-pass" class="w-full bg-slate-50 border-none px-6 py-5 rounded-2xl outline-none focus:ring-2 focus:ring-blue-600 transition" placeholder="Password">
+                            </div>
+                            <button onclick="adminLogin()" class="w-full bg-slate-900 text-white py-5 rounded-2xl font-black hover:bg-blue-600 transition-all shadow-xl shadow-slate-200">VALIDASI AKSES</button>
+                        </div>
+                        <div class="mt-8 text-center">
+                            <p class="text-[10px] text-slate-300">Lupa password? Hubungi Head of IT.</p>
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        function renderAdmin(container) {
+            if(!state.isAdmin) { navigateTo('login'); return; }
+            container.innerHTML = `
+                <section class="py-12 bg-slate-50 min-h-screen">
+                    <div class="max-w-7xl mx-auto px-6">
+                        <div class="flex justify-between items-center mb-12">
+                            <div>
+                                <h2 class="text-4xl font-black text-slate-900 tracking-tighter">SISTEM <span class="text-blue-600 uppercase">Manajemen</span></h2>
+                                <p class="text-slate-400 text-sm">Dashboard Intelijen Penjualan & Perangkat</p>
+                            </div>
+                            <button onclick="logout()" class="flex items-center space-x-2 text-red-500 font-bold hover:bg-red-50 p-3 rounded-xl transition">
+                                <i data-lucide="log-out" class="w-5 h-5"></i>
+                                <span>Keluar Sistem</span>
+                            </button>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                            <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100" data-aos="fade-up">
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Penjualan Bulan Ini</p>
+                                <h4 class="text-3xl font-black text-slate-900 tracking-tighter">Rp 2.4B</h4>
+                                <div class="mt-4 flex items-center text-green-500 text-xs font-bold">
+                                    <i data-lucide="trending-up" class="w-4 h-4 mr-1"></i> +12.5% vs Bulan Lalu
+                                </div>
+                            </div>
+                            <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100" data-aos="fade-up" data-aos-delay="100">
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Perangkat Online</p>
+                                <h4 class="text-3xl font-black text-slate-900 tracking-tighter">14.802</h4>
+                                <div class="mt-4 flex items-center text-blue-500 text-xs font-bold">
+                                    <i data-lucide="check" class="w-4 h-4 mr-1"></i> 99.9% Health Rate
+                                </div>
+                            </div>
+                            <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100" data-aos="fade-up" data-aos-delay="200">
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Antrian Instalasi</p>
+                                <h4 class="text-3xl font-black text-slate-900 tracking-tighter">84 Titik</h4>
+                                <div class="mt-4 flex items-center text-yellow-500 text-xs font-bold">
+                                    <i data-lucide="clock" class="w-4 h-4 mr-1"></i> Estimasi: 3 Hari Kerja
+                                </div>
+                            </div>
+                            <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100" data-aos="fade-up" data-aos-delay="300">
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Support Ticket</p>
+                                <h4 class="text-3xl font-black text-slate-900 tracking-tighter">0</h4>
+                                <div class="mt-4 flex items-center text-green-500 text-xs font-bold">
+                                    <i data-lucide="shield" class="w-4 h-4 mr-1"></i> Semua Teratasi
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-[40px] shadow-sm border border-slate-100 overflow-hidden" data-aos="fade-up">
+                            <div class="p-8 border-b border-slate-50 flex justify-between items-center bg-slate-900 text-white">
+                                <h3 class="text-xl font-black uppercase tracking-widest">Transaksi Terbaru</h3>
+                                <button class="text-xs font-bold bg-white/10 px-4 py-2 rounded-lg">Export CSV</button>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left">
+                                    <thead>
+                                        <tr class="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                                            <th class="p-8">Pelanggan</th>
+                                            <th class="p-8">Perangkat</th>
+                                            <th class="p-8">Status</th>
+                                            <th class="p-8">Nilai Transaksi</th>
+                                            <th class="p-8">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-sm font-medium">
+                                        <tr class="border-t border-slate-50 hover:bg-slate-50 transition">
+                                            <td class="p-8">
+                                                <div class="flex items-center space-x-3">
+                                                    <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-600">AH</div>
+                                                    <div><p class="font-bold">Andi Hermawan</p><p class="text-xs text-slate-400">Jakarta Selatan</p></div>
+                                                </div>
+                                            </td>
+                                            <td class="p-8">SecureX Home Lite x2</td>
+                                            <td class="p-8"><span class="bg-green-100 text-green-700 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest">Dibayar</span></td>
+                                            <td class="p-8 font-bold">Rp 2.500.000</td>
+                                            <td class="p-8"><button class="p-2 hover:bg-slate-200 rounded-lg"><i data-lucide="more-horizontal"></i></button></td>
+                                        </tr>
+                                        <tr class="border-t border-slate-50 hover:bg-slate-50 transition">
+                                            <td class="p-8">
+                                                <div class="flex items-center space-x-3">
+                                                    <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center font-bold text-purple-600">SM</div>
+                                                    <div><p class="font-bold">Sinar Maju Group</p><p class="text-xs text-slate-400">Surabaya Pusat</p></div>
+                                                </div>
+                                            </td>
+                                            <td class="p-8">Industrial Pro AI x8</td>
+                                            <td class="p-8"><span class="bg-blue-100 text-blue-700 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest">Proses</span></td>
+                                            <td class="p-8 font-bold">Rp 38.400.000</td>
+                                            <td class="p-8"><button class="p-2 hover:bg-slate-200 rounded-lg"><i data-lucide="more-horizontal"></i></button></td>
+                                        </tr>
+                                        <tr class="border-t border-slate-50 hover:bg-slate-50 transition">
+                                            <td class="p-8">
+                                                <div class="flex items-center space-x-3">
+                                                    <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center font-bold text-orange-600">BK</div>
+                                                    <div><p class="font-bold">Bpk. Kusuma</p><p class="text-xs text-slate-400">Bandung Kota</p></div>
+                                                </div>
+                                            </td>
+                                            <td class="p-8">NightVision Black x4</td>
+                                            <td class="p-8"><span class="bg-yellow-100 text-yellow-700 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest">Tertunda</span></td>
+                                            <td class="p-8 font-bold">Rp 13.600.000</td>
+                                            <td class="p-8"><button class="p-2 hover:bg-slate-200 rounded-lg"><i data-lucide="more-horizontal"></i></button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        // --- CORE LOGIC ---
+
+        function addToCart(id) {
+            const product = allProducts.find(p => p.id === id);
+            state.cart.push({...product, cartId: Date.now()});
+            updateCartUI();
+            
+            // Notification toast
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-10 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-8 py-4 rounded-2xl font-black shadow-2xl z-[100] animate-bounce';
+            toast.innerText = `${product.name} Ditambahkan!`;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2500);
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cart-items');
+            const totalEl = document.getElementById('cart-total');
+            const subtotalEl = document.getElementById('cart-subtotal');
+            const countEl = document.getElementById('cart-count');
+
+            countEl.innerText = state.cart.length;
+
+            if(state.cart.length === 0) {
+                container.innerHTML = `
+                    <div class="h-full flex flex-col items-center justify-center text-slate-300 space-y-4">
+                        <i data-lucide="shopping-bag" class="w-20 h-20"></i>
+                        <p class="font-bold uppercase tracking-widest text-xs">Keranjang Kosong</p>
+                    </div>
+                `;
+                subtotalEl.innerText = 'Rp 0';
+                totalEl.innerText = 'Rp 0';
+                return;
+            }
+
+            container.innerHTML = state.cart.map((item, idx) => `
+                <div class="flex items-center space-x-6 bg-slate-50 p-6 rounded-3xl relative group">
+                    <img src="${item.img}" class="w-20 h-20 rounded-2xl object-cover shadow-sm">
+                    <div class="flex-1">
+                        <h4 class="font-black text-slate-900 text-sm leading-tight">${item.name}</h4>
+                        <p class="text-blue-600 font-black text-sm mt-1">Rp ${item.price.toLocaleString('id-ID')}</p>
+                    </div>
+                    <button onclick="removeFromCart(${idx})" class="text-slate-300 hover:text-red-500 transition-colors">
+                        <i data-lucide="trash-2" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            `).join('');
+
+            const subtotal = state.cart.reduce((sum, item) => sum + item.price, 0);
+            subtotalEl.innerText = `Rp ${subtotal.toLocaleString('id-ID')}`;
+            totalEl.innerText = `Rp ${(subtotal + 250000).toLocaleString('id-ID')}`;
+            
+            lucide.createIcons();
+        }
+
+        function removeFromCart(idx) {
+            state.cart.splice(idx, 1);
+            updateCartUI();
+        }
+
+        function toggleCart() {
+            document.getElementById('cart-sidebar').classList.toggle('translate-x-full');
+        }
+
+        function checkout() {
+            if(state.cart.length === 0) return;
+            toggleCart();
+            toggleCheckoutModal();
+        }
+
+        function toggleCheckoutModal() {
+            const modal = document.getElementById('checkout-modal');
+            modal.classList.toggle('hidden');
+            // Reset modal state
+            document.getElementById('checkout-step-1').classList.remove('hidden');
+            document.getElementById('checkout-step-2').classList.add('hidden');
+            document.getElementById('checkout-step-3').classList.add('hidden');
+        }
+
+        function simulatedPayment(method) {
+            document.getElementById('checkout-step-1').classList.add('hidden');
+            document.getElementById('checkout-step-2').classList.remove('hidden');
+            
+            setTimeout(() => {
+                document.getElementById('checkout-step-2').classList.add('hidden');
+                document.getElementById('checkout-step-3').classList.remove('hidden');
+                state.cart = [];
+                updateCartUI();
+                lucide.createIcons();
+            }, 3500);
+        }
+
+        function adminLogin() {
+            const u = document.getElementById('admin-user').value;
+            const p = document.getElementById('admin-pass').value;
+            if(u === 'admin' && p === 'admin123') {
+                state.isAdmin = true;
+                navigateTo('admin');
+            } else {
+                alert('Akses Ditolak: Kredensial tidak valid.');
+            }
+        }
+
+        function logout() {
+            state.isAdmin = false;
+            navigateTo('beranda');
+        }
+
+        // Global Event Listeners
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if(window.scrollY > 100) {
+                nav.classList.add('shadow-xl');
+                nav.classList.add('h-16');
+                nav.classList.remove('h-20');
+            } else {
+                nav.classList.remove('shadow-xl');
+                nav.classList.add('h-20');
+                nav.classList.remove('h-16');
+            }
+        });
+
+        // Initialize App
+        window.onload = () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('opacity-0');
+                setTimeout(() => document.getElementById('loader').classList.add('hidden'), 700);
+            }, 1000);
+            navigateTo('beranda');
+            updateCartUI();
+        };
+    </script>
+</body>
+</html>
+
