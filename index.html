@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureVision | Enterprise Security & Intelligence</title>
+    
+    <!-- Dependencies -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <style>
+        :root {
+            --brand-primary: #1d4ed8;
+            --brand-dark: #0f172a;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            scroll-behavior: smooth;
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .product-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .product-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+        }
+
+        .gradient-bg {
+            background: radial-gradient(circle at 0% 0%, #eff6ff 0%, transparent 50%),
+                        radial-gradient(circle at 100% 100%, #f1f5f9 0%, transparent 50%);
+        }
+
+        .btn-primary {
+            background: var(--brand-primary);
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: #1e3a8a;
+            transform: scale(1.02);
+        }
+
+        .nav-link {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--brand-primary);
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .active-nav::after {
+            width: 100%;
+        }
+
+        /* Loading Spinner */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: white;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s;
+        }
+    </style>
+</head>
+<body class="gradient-bg">
+
+    <!-- Preloader -->
+    <div id="loader">
+        <div class="flex flex-col items-center">
+            <div class="w-12 h-12 border-4 border-blue-200 border-t-blue-700 rounded-full animate-spin"></div>
+            <p class="mt-4 font-bold text-xs tracking-widest text-slate-400">SECUREVISION LOADING...</p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-nav">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="router.push('beranda')">
+                <div class="bg-blue-700 p-2 rounded-lg text-white">
+                    <i data-lucide="shield" class="w-6 h-6"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-xl font-black tracking-tighter leading-none">SECURE<span class="text-blue-700">VISION</span></span>
+                    <span class="text-[8px] font-bold tracking-[0.3em] text-slate-400 uppercase">Intelligence Unit</span>
+                </div>
+            </div>
+
+            <div class="hidden lg:flex items-center space-x-10 text-sm font-bold text-slate-600">
+                <span onclick="router.push('beranda')" class="nav-link" id="nav-beranda">Beranda</span>
+                <span onclick="router.push('produk')" class="nav-link" id="nav-produk">Produk</span>
+                <span onclick="router.push('layanan')" class="nav-link" id="nav-layanan">Layanan</span>
+                <span onclick="router.push('tentang')" class="nav-link" id="nav-tentang">Tentang</span>
+                
+                <div class="h-5 w-px bg-slate-200"></div>
+
+                <div class="flex items-center space-x-6">
+                    <button onclick="cart.toggle()" class="relative">
+                        <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                    </button>
+                    <button onclick="router.push('login')" id="nav-login" class="bg-slate-900 text-white px-5 py-2.5 rounded-xl hover:bg-blue-700 transition shadow-lg shadow-slate-200">Admin Login</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="app" class="pt-20 min-h-screen">
+        <!-- Dynamic Content -->
+    </main>
+
+    <!-- Cart Sidebar -->
+    <div id="cart-drawer" class="fixed inset-y-0 right-0 w-full md:w-96 bg-white shadow-2xl translate-x-full transition-transform duration-500 z-[100] flex flex-col">
+        <div class="p-6 bg-slate-900 text-white flex justify-between items-center">
+            <h3 class="font-bold uppercase tracking-widest text-sm">Keranjang Belanja</h3>
+            <button onclick="cart.toggle()"><i data-lucide="x"></i></button>
+        </div>
+        <div id="cart-list" class="flex-1 overflow-y-auto p-6 space-y-4">
+            <!-- Items -->
+        </div>
+        <div class="p-6 border-t space-y-4">
+            <div class="flex justify-between font-bold">
+                <span>Total Estimasi:</span>
+                <span id="cart-total" class="text-blue-700">Rp 0</span>
+            </div>
+            <button onclick="router.push('checkout')" class="w-full btn-primary py-4 rounded-xl font-bold uppercase text-xs tracking-widest">Lanjut Pembelian</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-white pt-20 pb-10">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
+            <div class="col-span-1 md:col-span-1">
+                <div class="flex items-center space-x-2 mb-6">
+                    <i data-lucide="shield" class="text-blue-500"></i>
+                    <span class="text-xl font-black">SECUREVISION</span>
+                </div>
+                <p class="text-slate-500 text-sm leading-relaxed">Inovasi keamanan digital terdepan di Indonesia. Menjaga aset Anda dengan teknologi AI tercanggih.</p>
+            </div>
+            <div>
+                <h4 class="font-bold mb-6 text-blue-500">Quick Links</h4>
+                <ul class="text-slate-400 text-sm space-y-3">
+                    <li class="hover:text-white cursor-pointer transition">Katalog Terbaru</li>
+                    <li class="hover:text-white cursor-pointer transition">Paket Corporate</li>
+                    <li class="hover:text-white cursor-pointer transition">Panduan Instalasi</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold mb-6 text-blue-500">Bantuan</h4>
+                <ul class="text-slate-400 text-sm space-y-3">
+                    <li class="hover:text-white cursor-pointer transition">Pusat Servis</li>
+                    <li class="hover:text-white cursor-pointer transition">Garansi Produk</li>
+                    <li class="hover:text-white cursor-pointer transition">Hubungi Kami</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold mb-6 text-blue-500">Newsletter</h4>
+                <div class="flex">
+                    <input type="text" placeholder="Email Anda" class="bg-slate-900 border-none px-4 py-2 rounded-l-lg w-full text-sm outline-none">
+                    <button class="bg-blue-700 px-4 rounded-r-lg"><i data-lucide="send" class="w-4 h-4"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 pt-10 border-t border-slate-900 text-center text-[10px] text-slate-600 font-bold tracking-[0.2em] uppercase">
+            &copy; 2024 SecureVision Intelligence. Built with Professional Precision.
+        </div>
+    </footer>
+
+    <!-- Logic Script -->
+    <script>
+        // Data Store
+        const products = [
+            { id: 1, name: "AlphaDome AI v2", price: 1850000, cat: "Indoor", img: "https://images.unsplash.com/photo-1549892145-82784081b2f2?w=500", spec: "4K, NightVision, AI Tracking" },
+            { id: 2, name: "Bullet Guard Pro", price: 2450000, cat: "Outdoor", img: "https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=500", spec: "IP67 Weatherproof, 50m IR" },
+            { id: 3, name: "Sentinel PTZ 360", price: 4200000, cat: "Enterprise", img: "https://images.unsplash.com/photo-1521111756787-d2f69136cedf?w=500", spec: "Optical Zoom 20x, Auto-Patrol" },
+            { id: 4, name: "Nano Connect", price: 950000, cat: "Residential", img: "https://images.unsplash.com/photo-1545193073-952403b22e1b?w=500", spec: "Simple WiFi, 2-Way Audio" },
+            { id: 5, name: "Thermal Master X", price: 15750000, cat: "Industrial", img: "https://images.unsplash.com/photo-1516216628859-9bccecad13fc?w=500", spec: "Heat Mapping, Fire Alert" },
+            { id: 6, name: "Smart NVR 8-Ch", price: 3200000, cat: "Accessory", img: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=500", spec: "4TB Storage, Cloud Backup" }
+        ];
+
+        let state = {
+            cart: [],
+            user: null, // Admin login status
+            view: 'beranda'
+        };
+
+        // Router Engine
+        const router = {
+            push: (view) => {
+                state.view = view;
+                router.render();
+                window.scrollTo(0,0);
+                
+                // Active link UI
+                document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active-nav', 'text-blue-700'));
+                const active = document.getElementById('nav-' + view);
+                if(active) active.classList.add('active-nav', 'text-blue-700');
+            },
+            render: () => {
+                const app = document.getElementById('app');
+                lucide.createIcons();
+                
+                switch(state.view) {
+                    case 'beranda':
+                        app.innerHTML = `
+                            <section class="relative py-24 md:py-44 overflow-hidden">
+                                <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+                                    <div data-aos="fade-right">
+                                        <div class="inline-flex items-center space-x-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-full mb-8 border border-blue-100">
+                                            <span class="w-2 h-2 bg-blue-700 rounded-full animate-pulse"></span>
+                                            <span class="text-[10px] font-black uppercase tracking-widest">Next-Gen AI Security</span>
+                                        </div>
+                                        <h1 class="text-6xl md:text-8xl font-black text-slate-900 leading-[0.9] tracking-tighter mb-8 italic">
+                                            TOTAL <br><span class="text-blue-700">PROTECTION.</span>
+                                        </h1>
+                                        <p class="text-lg text-slate-500 mb-10 leading-relaxed max-w-lg">
+                                            Sistem pengawasan cerdas yang mendeteksi ancaman sebelum terjadi. Bukan sekadar merekam, tapi melindungi.
+                                        </p>
+                                        <div class="flex flex-wrap gap-4">
+                                            <button onclick="router.push('produk')" class="btn-primary px-10 py-5 rounded-2xl font-black shadow-xl shadow-blue-200">MULAI BELANJA</button>
+                                            <button onclick="router.push('layanan')" class="bg-white border border-slate-200 px-10 py-5 rounded-2xl font-black hover:bg-slate-50 transition">LAYANAN KAMI</button>
+                                        </div>
+                                    </div>
+                                    <div class="relative" data-aos="fade-left">
+                                        <img src="https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=800" class="rounded-[40px] shadow-2xl">
+                                        <div class="absolute -bottom-10 -left-10 bg-white p-8 rounded-3xl shadow-2xl hidden md:block border border-slate-50">
+                                            <div class="flex items-center space-x-4">
+                                                <div class="bg-emerald-100 p-3 rounded-xl text-emerald-600"><i data-lucide="activity"></i></div>
+                                                <div>
+                                                    <p class="text-[10px] font-bold text-slate-400">STATUS SISTEM</p>
+                                                    <p class="text-lg font-black">AKTIF 24/7</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            
+                            <section class="py-24 bg-white">
+                                <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-12">
+                                    <div class="p-10 bg-slate-50 rounded-3xl" data-aos="fade-up">
+                                        <i data-lucide="brain-circuit" class="text-blue-700 w-12 h-12 mb-6"></i>
+                                        <h3 class="text-xl font-bold mb-4">Neural Engine</h3>
+                                        <p class="text-slate-500 text-sm">Analisis perilaku manusia secara real-time untuk membedakan tamu dan penyusup.</p>
+                                    </div>
+                                    <div class="p-10 bg-slate-50 rounded-3xl" data-aos="fade-up" data-aos-delay="100">
+                                        <i data-lucide="cloud" class="text-blue-700 w-12 h-12 mb-6"></i>
+                                        <h3 class="text-xl font-bold mb-4">Hybrid Cloud</h3>
+                                        <p class="text-slate-500 text-sm">Penyimpanan ganda di lokasi dan cloud dengan enkripsi militer AES-256.</p>
+                                    </div>
+                                    <div class="p-10 bg-slate-50 rounded-3xl" data-aos="fade-up" data-aos-delay="200">
+                                        <i data-lucide="smartphone" class="text-blue-700 w-12 h-12 mb-6"></i>
+                                        <h3 class="text-xl font-bold mb-4">Remote Access</h3>
+                                        <p class="text-slate-500 text-sm">Akses kontrol penuh dari mana saja di dunia melalui aplikasi eksklusif kami.</p>
+                                    </div>
+                                </div>
+                            </section>
+                        `;
+                        break;
+
+                    case 'produk':
+                        app.innerHTML = `
+                            <section class="py-24 max-w-7xl mx-auto px-6">
+                                <div class="flex justify-between items-end mb-16">
+                                    <div data-aos="fade-right">
+                                        <h2 class="text-5xl font-black tracking-tight mb-4">KATALOG <span class="text-blue-700">PRODUK</span></h2>
+                                        <p class="text-slate-400">Pilih perangkat yang sesuai dengan level keamanan Anda.</p>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                                    ${products.map(p => `
+                                        <div class="product-card bg-white rounded-[32px] overflow-hidden border border-slate-100 p-4" data-aos="fade-up">
+                                            <img src="${p.img}" class="w-full h-64 object-cover rounded-[24px] mb-6 shadow-inner">
+                                            <div class="px-2 pb-4">
+                                                <div class="flex justify-between items-start mb-2">
+                                                    <span class="text-[10px] font-black uppercase tracking-widest text-blue-600">${p.cat}</span>
+                                                    <div class="flex text-yellow-400"><i data-lucide="star" class="w-3 h-3 fill-current"></i></div>
+                                                </div>
+                                                <h3 class="text-xl font-black mb-1">${p.name}</h3>
+                                                <p class="text-xs text-slate-400 mb-6">${p.spec}</p>
+                                                <div class="flex justify-between items-center">
+                                                    <span class="text-xl font-black text-slate-900 italic">Rp ${p.price.toLocaleString('id-ID')}</span>
+                                                    <button onclick="cart.add(${p.id})" class="bg-slate-900 text-white p-3 rounded-xl hover:bg-blue-700 transition">
+                                                        <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </section>
+                        `;
+                        break;
+
+                    case 'checkout':
+                        app.innerHTML = `
+                            <section class="py-24 max-w-4xl mx-auto px-6" data-aos="zoom-in">
+                                <div class="bg-white rounded-[40px] shadow-2xl border border-slate-50 overflow-hidden">
+                                    <div class="bg-slate-900 p-10 text-white">
+                                        <h2 class="text-3xl font-black tracking-tight">DATA PEMBELIAN</h2>
+                                        <p class="text-xs text-blue-400 uppercase tracking-widest mt-2">Lengkapi detail untuk pengiriman & instalasi</p>
+                                    </div>
+                                    <div class="p-10 grid md:grid-cols-2 gap-10">
+                                        <div class="space-y-6">
+                                            <h4 class="font-bold text-slate-400 uppercase text-[10px] tracking-widest">Informasi Kontak</h4>
+                                            <input type="text" placeholder="Nama Lengkap" class="w-full bg-slate-50 border-none px-6 py-4 rounded-xl outline-none focus:ring-2 focus:ring-blue-600">
+                                            <input type="tel" placeholder="Nomor WhatsApp" class="w-full bg-slate-50 border-none px-6 py-4 rounded-xl outline-none focus:ring-2 focus:ring-blue-600">
+                                            <textarea placeholder="Alamat Instalasi Lengkap" class="w-full bg-slate-50 border-none px-6 py-4 rounded-xl outline-none focus:ring-2 focus:ring-blue-600 h-32"></textarea>
+                                        </div>
+                                        <div class="bg-slate-50 p-8 rounded-3xl h-fit">
+                                            <h4 class="font-bold text-slate-400 uppercase text-[10px] tracking-widest mb-6">Ringkasan Pesanan</h4>
+                                            <div id="checkout-summary" class="space-y-4 mb-8">
+                                                <!-- Dynamic Items -->
+                                            </div>
+                                            <div class="border-t pt-4 flex justify-between items-center mb-8">
+                                                <span class="font-bold">Total Akhir:</span>
+                                                <span class="text-2xl font-black text-blue-700" id="checkout-total">Rp 0</span>
+                                            </div>
+                                            <button onclick="router.finalizeOrder()" class="w-full btn-primary py-4 rounded-xl font-bold uppercase tracking-widest text-xs">Konfirmasi Pesanan</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        `;
+                        router.renderCheckoutSummary();
+                        break;
+
+                    case 'login':
+                        app.innerHTML = `
+                            <section class="py-44 flex items-center justify-center px-6">
+                                <div class="bg-white p-12 rounded-[40px] shadow-2xl w-full max-w-md border border-slate-100" data-aos="fade-up">
+                                    <div class="text-center mb-10">
+                                        <div class="w-20 h-20 bg-blue-700 text-white rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl shadow-blue-200">
+                                            <i data-lucide="lock" class="w-10 h-10"></i>
+                                        </div>
+                                        <h3 class="text-2xl font-black">Admin Access</h3>
+                                        <p class="text-slate-400 text-xs mt-2 uppercase tracking-widest font-bold italic">SecureVision Management Console</p>
+                                    </div>
+                                    <div class="space-y-6">
+                                        <input type="text" id="admin-user" placeholder="Username" class="w-full bg-slate-50 border-none px-6 py-4 rounded-xl outline-none focus:ring-2 focus:ring-blue-700">
+                                        <input type="password" id="admin-pass" placeholder="Password" class="w-full bg-slate-50 border-none px-6 py-4 rounded-xl outline-none focus:ring-2 focus:ring-blue-700">
+                                        <button onclick="router.handleLogin()" class="w-full bg-slate-950 text-white py-4 rounded-xl font-black hover:bg-blue-700 transition">MASUK KE DASHBOARD</button>
+                                        <p class="text-[10px] text-center text-slate-400 font-bold uppercase">Akses terbatas. Gunakan admin | secure123</p>
+                                    </div>
+                                </div>
+                            </section>
+                        `;
+                        break;
+
+                    case 'admin-dashboard':
+                        if(!state.user) { router.push('login'); return; }
+                        app.innerHTML = `
+                            <section class="py-24 max-w-7xl mx-auto px-6">
+                                <div class="flex justify-between items-center mb-12">
+                                    <h2 class="text-3xl font-black tracking-tight uppercase">Dashboard <span class="text-blue-700">Analytics</span></h2>
+                                    <button onclick="router.logout()" class="text-red-500 font-bold flex items-center space-x-2"><i data-lucide="log-out" class="w-4 h-4"></i> <span>Keluar</span></button>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                                    <div class="bg-white p-8 rounded-3xl border border-slate-100">
+                                        <p class="text-slate-400 text-[10px] font-black uppercase mb-2">Penjualan Bulan Ini</p>
+                                        <p class="text-3xl font-black text-blue-700">Rp 428M</p>
+                                    </div>
+                                    <div class="bg-white p-8 rounded-3xl border border-slate-100">
+                                        <p class="text-slate-400 text-[10px] font-black uppercase mb-2">Total Klien Aktif</p>
+                                        <p class="text-3xl font-black text-slate-900">12,482</p>
+                                    </div>
+                                    <div class="bg-white p-8 rounded-3xl border border-slate-100">
+                                        <p class="text-slate-400 text-[10px] font-black uppercase mb-2">Health System</p>
+                                        <p class="text-3xl font-black text-emerald-500">99.8%</p>
+                                    </div>
+                                    <div class="bg-white p-8 rounded-3xl border border-slate-100">
+                                        <p class="text-slate-400 text-[10px] font-black uppercase mb-2">Laporan Intrusi</p>
+                                        <p class="text-3xl font-black text-red-500">0</p>
+                                    </div>
+                                </div>
+                                <div class="bg-white p-10 rounded-3xl border border-slate-100">
+                                    <h4 class="font-bold mb-6">Aktivitas Terkini</h4>
+                                    <div class="space-y-4">
+                                        <div class="p-4 bg-slate-50 rounded-xl flex justify-between items-center text-sm">
+                                            <span class="font-bold">Instalasi di Gedung Cyber Jakarta</span>
+                                            <span class="text-emerald-500 font-bold uppercase text-[10px]">Selesai</span>
+                                        </div>
+                                        <div class="p-4 bg-slate-50 rounded-xl flex justify-between items-center text-sm">
+                                            <span class="font-bold">Update Firmware AI v2.4</span>
+                                            <span class="text-blue-500 font-bold uppercase text-[10px]">Processing</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        `;
+                        break;
+                    
+                    case 'layanan':
+                        app.innerHTML = `
+                            <section class="py-24 max-w-5xl mx-auto px-6 text-center">
+                                <h2 class="text-5xl font-black mb-12">Solusi Integrasi</h2>
+                                <div class="grid gap-8 text-left">
+                                    <div class="p-10 bg-blue-700 text-white rounded-[40px] flex items-center space-x-8" data-aos="fade-up">
+                                        <div class="bg-white text-blue-700 p-6 rounded-3xl"><i data-lucide="wrench"></i></div>
+                                        <div>
+                                            <h4 class="text-2xl font-bold mb-2">Maintenance Rutin</h4>
+                                            <p class="opacity-80">Pengecekan lensa, konektivitas, dan kesehatan penyimpanan setiap 3 bulan sekali.</p>
+                                        </div>
+                                    </div>
+                                    <div class="p-10 bg-slate-900 text-white rounded-[40px] flex items-center space-x-8" data-aos="fade-up" data-aos-delay="100">
+                                        <div class="bg-blue-600 text-white p-6 rounded-3xl"><i data-lucide="hard-drive"></i></div>
+                                        <div>
+                                            <h4 class="text-2xl font-bold mb-2">Cloud Storage Unlimited</h4>
+                                            <p class="opacity-80">Backup rekaman ke server aman kami agar data tidak hilang meskipun DVR dirusak.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        `;
+                        break;
+
+                    case 'tentang':
+                        app.innerHTML = `
+                            <section class="py-24 max-w-7xl mx-auto px-6">
+                                <div class="grid lg:grid-cols-2 gap-20 items-center">
+                                    <div data-aos="fade-right">
+                                        <h2 class="text-6xl font-black mb-8">Warisan <br><span class="text-blue-700">Keamanan.</span></h2>
+                                        <p class="text-slate-500 leading-relaxed mb-8">Berdiri sejak 2012, SecureVision telah menjadi mitra strategis bagi lebih dari 100 perusahaan Fortune 500 di Indonesia untuk urusan keamanan aset.</p>
+                                        <div class="flex space-x-12">
+                                            <div><p class="text-4xl font-black text-blue-700">12</p><p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Tahun Eksistensi</p></div>
+                                            <div><p class="text-4xl font-black text-blue-700">50+</p><p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Penghargaan Global</p></div>
+                                        </div>
+                                    </div>
+                                    <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=800" class="rounded-[50px] shadow-2xl" data-aos="fade-left">
+                                </div>
+                            </section>
+                        `;
+                        break;
+                }
+                lucide.createIcons();
+            },
+            
+            // Logic Auth
+            handleLogin: () => {
+                const u = document.getElementById('admin-user').value;
+                const p = document.getElementById('admin-pass').value;
+                if(u === 'admin' && p === 'secure123') {
+                    state.user = 'Administrator';
+                    document.getElementById('nav-login').innerText = 'Dashboard';
+                    router.push('admin-dashboard');
+                } else {
+                    alert('Akses Ditolak: Identitas tidak valid.');
+                }
+            },
+            logout: () => {
+                state.user = null;
+                document.getElementById('nav-login').innerText = 'Admin Login';
+                router.push('beranda');
+            },
+
+            // Checkout Logic
+            renderCheckoutSummary: () => {
+                const list = document.getElementById('checkout-summary');
+                const totalDisplay = document.getElementById('checkout-total');
+                if(!list) return;
+
+                if(state.cart.length === 0) {
+                    list.innerHTML = '<p class="text-slate-400 italic">Belum ada barang di keranjang.</p>';
+                    return;
+                }
+
+                let sum = 0;
+                list.innerHTML = state.cart.map(item => {
+                    sum += item.price;
+                    return `<div class="flex justify-between text-sm"><span>${item.name}</span><span class="font-bold italic text-slate-400">Rp ${item.price.toLocaleString('id-ID')}</span></div>`;
+                }).join('');
+                totalDisplay.innerText = 'Rp ' + sum.toLocaleString('id-ID');
+            },
+            finalizeOrder: () => {
+                if(state.cart.length === 0) { alert('Keranjang masih kosong.'); return; }
+                alert('PESANAN TERKONFIRMASI! Tim Logistik SecureVision akan segera menghubungi Anda untuk koordinasi pengiriman.');
+                state.cart = [];
+                cart.update();
+                router.push('beranda');
+            }
+        };
+
+        // Cart Logic
+        const cart = {
+            toggle: () => {
+                document.getElementById('cart-drawer').classList.toggle('translate-x-full');
+            },
+            add: (id) => {
+                const prod = products.find(p => p.id === id);
+                state.cart.push({...prod, instanceId: Date.now()});
+                cart.update();
+                cart.notify(prod.name);
+            },
+            remove: (insId) => {
+                state.cart = state.cart.filter(c => c.instanceId !== insId);
+                cart.update();
+                if(state.view === 'checkout') router.renderCheckoutSummary();
+            },
+            update: () => {
+                const count = document.getElementById('cart-count');
+                const list = document.getElementById('cart-list');
+                const total = document.getElementById('cart-total');
+                
+                count.innerText = state.cart.length;
+                
+                if(state.cart.length === 0) {
+                    list.innerHTML = `<div class="text-center py-20 text-slate-300 font-bold text-[10px] tracking-widest">KERANJANG KOSONG</div>`;
+                    total.innerText = 'Rp 0';
+                } else {
+                    let sum = 0;
+                    list.innerHTML = state.cart.map(item => {
+                        sum += item.price;
+                        return `
+                            <div class="flex items-center space-x-4 bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                                <img src="${item.img}" class="w-12 h-12 rounded-lg object-cover">
+                                <div class="flex-1">
+                                    <h5 class="text-[10px] font-black uppercase text-slate-400 leading-tight">${item.name}</h5>
+                                    <p class="font-bold text-xs text-blue-700">Rp ${item.price.toLocaleString('id-ID')}</p>
+                                </div>
+                                <button onclick="cart.remove(${item.instanceId})" class="text-red-400"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                            </div>
+                        `;
+                    }).join('');
+                    total.innerText = 'Rp ' + sum.toLocaleString('id-ID');
+                }
+                lucide.createIcons();
+            },
+            notify: (name) => {
+                const n = document.createElement('div');
+                n.className = "fixed bottom-6 right-6 bg-slate-900 text-white px-6 py-4 rounded-2xl z-[500] shadow-2xl flex items-center space-x-3 border-l-4 border-blue-600 animate-bounce";
+                n.innerHTML = `<i data-lucide="check-circle" class="text-blue-500"></i> <span class="text-xs font-black uppercase tracking-widest">${name} Ditambahkan</span>`;
+                document.body.appendChild(n);
+                lucide.createIcons();
+                setTimeout(() => n.remove(), 2500);
+            }
+        };
+
+        // Init
+        window.onload = () => {
+            router.push('beranda');
+            AOS.init({ duration: 1000, once: true });
+            setTimeout(() => {
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => document.getElementById('loader').remove(), 500);
+            }, 1000);
+        };
+    </script>
+</body>
+</html>
+
